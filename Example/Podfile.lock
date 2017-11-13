@@ -1,0 +1,16 @@
+PODS:
+  - SocialKit (0.1.0)
+
+DEPENDENCIES:
+  - SocialKit (from `../`)
+
+EXTERNAL SOURCES:
+  SocialKit:
+    :path: ../
+
+SPEC CHECKSUMS:
+  SocialKit: bb564be1d9ad77535de54cae1aea404a64817189
+
+PODFILE CHECKSUM: cf6b3c7528e830080de7a2cdcd771d74649ee44b
+
+COCOAPODS: 1.3.1
