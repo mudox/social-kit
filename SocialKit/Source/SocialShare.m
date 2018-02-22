@@ -12,7 +12,7 @@
 #import "WeChat/WeChatSDKManager.h"
 #import "Weibo/WeiboSDKManager.h"
 
-@import Jack;
+@import JacKit;
 
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;

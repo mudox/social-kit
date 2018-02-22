@@ -9,7 +9,7 @@
 #import "SneakBackGuard.h"
 #import "SDKBaseManager.h"
 
-@import Jack;
+@import JacKit;
 
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;

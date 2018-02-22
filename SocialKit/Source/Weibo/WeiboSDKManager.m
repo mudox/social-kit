@@ -12,7 +12,7 @@
 
 #import "WeiboSDK.h"
 
-@import Jack;
+@import JacKit;
 
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;

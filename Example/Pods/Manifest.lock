@@ -1,16 +1,40 @@
 PODS:
-  - SocialKit (0.1.0)
+  - CocoaLumberjack/Default (3.3.0)
+  - CocoaLumberjack/Swift (3.3.0):
+    - CocoaLumberjack/Default
+  - JacKit (1.0.0-beta1):
+    - CocoaLumberjack/Swift (~> 3.3.0)
+  - PromiseKit (4.5.0):
+    - PromiseKit/Foundation (= 4.5.0)
+    - PromiseKit/QuartzCore (= 4.5.0)
+    - PromiseKit/UIKit (= 4.5.0)
+  - PromiseKit/CorePromise (4.5.0)
+  - PromiseKit/Foundation (4.5.0):
+    - PromiseKit/CorePromise
+  - PromiseKit/QuartzCore (4.5.0):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (4.5.0):
+    - PromiseKit/CorePromise
+  - SocialKit (0.1.0):
+    - JacKit
+    - PromiseKit
 
 DEPENDENCIES:
+  - JacKit (from `../../JacKit`)
   - SocialKit (from `../`)
 
 EXTERNAL SOURCES:
+  JacKit:
+    :path: ../../JacKit
   SocialKit:
     :path: ../
 
 SPEC CHECKSUMS:
-  SocialKit: bb564be1d9ad77535de54cae1aea404a64817189
+  CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
+  JacKit: de46ba528274b33323f5f6c646ecae52c91e9711
+  PromiseKit: 9c1d9f6d7b65e3951a90bea7f407c56972be5d8e
+  SocialKit: 433cd19739d47c8410a9428a5cd1dfe9c9027f6a
 
-PODFILE CHECKSUM: cf6b3c7528e830080de7a2cdcd771d74649ee44b
+PODFILE CHECKSUM: 170c55b611fdd3a7d5f5934837619704565d77e3
 
 COCOAPODS: 1.3.1

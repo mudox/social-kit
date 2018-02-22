@@ -1,22 +1,64 @@
 {
   "name": "SocialKit",
   "version": "0.1.0",
-  "summary": "A short description of SocialKit.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/mudox/SocialKit",
+  "summary": "My all-in-one social SDK library.",
+  "description": "TBD",
+  "homepage": "https://github.com/mudox/social-kit",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
-  "authors": {
-    "mudox": "mudoxisme@gmail.com"
-  },
+  "authors": "mudox",
   "source": {
-    "git": "https://github.com/mudox/SocialKit.git",
+    "git": "https://github.com/mudox/social-kit.git",
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "9.0"
   },
-  "source_files": "SocialKit/Classes/**/*"
+  "source_files": [
+    "SocialKit/Source/**/*.{h,m,swift}",
+    "SocialKit/Library/**/*.{h,m,swift}"
+  ],
+  "public_header_files": [
+    "SocialKit/Source/{Types,SSError,SSOResult,SocialKit}.h",
+    "SocialKit/Library/**/*.h"
+  ],
+  "resources": [
+    "SocialKit/Library/**/*.bundle",
+    "SocialKit/Library/**/*.framework"
+  ],
+  "pod_target_xcconfig": {
+    "OTHER_LDFLAGS": "-all_load"
+  },
+  "frameworks": [
+    "Photos",
+    "ImageIO",
+    "SystemConfiguration",
+    "CoreText",
+    "QuartzCore",
+    "Security",
+    "UIKit",
+    "Foundation",
+    "CoreGraphics",
+    "CoreTelephony"
+  ],
+  "libraries": [
+    "stdc++",
+    "sqlite3",
+    "iconv",
+    "c++",
+    "sqlite3",
+    "z"
+  ],
+  "vendored_libraries": "SocialKit/Library/**/*.a",
+  "vendored_frameworks": "SocialKit/Library/**/*.framework",
+  "dependencies": {
+    "JacKit": [
+
+    ],
+    "PromiseKit": [
+
+    ]
+  }
 }

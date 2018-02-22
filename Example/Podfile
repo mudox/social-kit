@@ -1,7 +1,9 @@
 use_frameworks!
 
 target 'SocialKit_Example' do
+
   pod 'SocialKit', :path => '../'
+  pod 'JacKit', :path => '../../JacKit'
 
   target 'SocialKit_Tests' do
     inherit! :search_paths

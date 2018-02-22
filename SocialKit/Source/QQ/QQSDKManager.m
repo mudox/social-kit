@@ -13,7 +13,7 @@
 #import "TencentApiInterface.h"
 #import "QQApiInterface.h"
 
-@import Jack;
+@import JacKit;
 
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = DDLogLevelVerbose;
@@ -270,11 +270,19 @@ static QQSDKManager *sharedClient;
 
   UIAlertAction *qqAction = [UIAlertAction actionWithTitle:@"安装或者更新 QQ" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                NSURL *appURL = [NSURL URLWithString:[QQApiInterface getQQInstallUrl]];
-                               [UIApplication.sharedApplication openURL:appURL options:@{} completionHandler:nil];
+    if (@available(iOS 10.0, *)) {
+      [UIApplication.sharedApplication openURL:appURL options:@{} completionHandler:nil];
+    } else {
+      // Fallback on earlier versions
+    }
                              }];
   UIAlertAction *timAction = [UIAlertAction actionWithTitle:@"安装或者更新 TIM" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                 NSURL *appURL = [NSURL URLWithString:[QQApiInterface getTIMInstallUrl]];
-                                [UIApplication.sharedApplication openURL:appURL options:@{} completionHandler:nil];
+    if (@available(iOS 10.0, *)) {
+      [UIApplication.sharedApplication openURL:appURL options:@{} completionHandler:nil];
+    } else {
+      // Fallback on earlier versions
+    }
                               }];
   UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {}];
 
