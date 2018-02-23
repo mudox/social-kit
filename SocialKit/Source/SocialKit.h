@@ -1,5 +1,5 @@
 //
-// SocialShare.h
+// SocialKit.h
 // Pods
 //
 // Created by Mudox on 11/04/2017.
@@ -12,7 +12,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface SocialShare : NSObject
+@interface SocialKit : NSObject
 
 #pragma mark Service initialization
 

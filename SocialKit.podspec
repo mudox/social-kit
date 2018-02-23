@@ -16,14 +16,27 @@ Pod::Spec.new do |s|
 
   s.ios.deployment_target = '9.0'
 
-  s.source_files = 'SocialKit/Source/**/*.{h,m,swift}', 'SocialKit/Library/**/*.{h,m,swift}'
-  s.public_header_files = 'SocialKit/Source/{Types,SSError,SSOResult,SocialKit}.h', 'SocialKit/Library/**/*.h'
-  s.resources = 'SocialKit/Library/**/*.bundle', 'SocialKit/Library/**/*.framework'
+  s.source_files = [
+    'SocialKit/Source/**/*.{h,m,swift}',
+    'SocialKit/Library/**/*.{h,m,swift}'
+  ]
+  s.public_header_files = [
+    'SocialKit/Source/{Types,SSError,SSOResult,SocialKit}.h',
+    'SocialKit/Library/**/*.h'
+  ]
+  s.resources = [
+    'SocialKit/Library/**/*.bundle',
+    'SocialKit/Library/**/*.framework'
+  ]
 
   s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-all_load' }
 
-  s.frameworks = 'Photos', 'ImageIO', 'SystemConfiguration', 'CoreText', 'QuartzCore', 'Security', 'UIKit', 'Foundation', 'CoreGraphics', 'CoreTelephony'
+  s.frameworks = [
+    'Photos', 'ImageIO', 'SystemConfiguration', 'CoreText', 'QuartzCore',
+    'Security', 'UIKit', 'Foundation', 'CoreGraphics', 'CoreTelephony'
+  ]
   s.libraries = 'stdc++', 'sqlite3', 'iconv', 'c++', 'sqlite3', 'z'
+
   s.vendored_libraries = 'SocialKit/Library/**/*.a'
   s.vendored_frameworks = 'SocialKit/Library/**/*.framework'
 

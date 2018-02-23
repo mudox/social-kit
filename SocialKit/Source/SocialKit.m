@@ -1,12 +1,12 @@
 //
-// SocialShare.m
+// SocialKit.m
 // Pods
 //
 // Created by Mudox on 11/04/2017.
 //
 //
 
-#import "SocialShare.h"
+#import "SocialKit.h"
 
 #import "QQ/QQSDKManager.h"
 #import "WeChat/WeChatSDKManager.h"
@@ -30,7 +30,7 @@ typedef NS_OPTIONS (NSUInteger, SSSDKFlag) {
 
 SSSDKFlag activeSDKSet = 0;
 
-@implementation SocialShare
+@implementation SocialKit
 
 #pragma mark Prepare SDKs
 

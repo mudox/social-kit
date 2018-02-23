@@ -10,6 +10,7 @@
 #endif
 #endif
 
+#import "SocialKit.h"
 #import "SSError.h"
 #import "SSOResult.h"
 #import "Types.h"

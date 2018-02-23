@@ -9,7 +9,7 @@
 @import Foundation;
 
 #import "SDKBaseManager.h"
-#import "SocialShare.h"
+#import "SocialKit.h"
 
 NSString *NSStringFromSSStage(SSStage stage)
 {

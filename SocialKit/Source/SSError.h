@@ -19,7 +19,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark Domain & error codes
 
 // domain
-#define kSSErrorDomain @"com.mudox.SocialShare.ErrorDomain"
+#define kSSErrorDomain @"com.mudox.SocialKit.ErrorDomain"
 
 // error code
 typedef NS_ENUM (NSInteger, SSErrorCode) {

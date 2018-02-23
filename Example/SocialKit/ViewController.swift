@@ -7,18 +7,33 @@
 //
 
 import UIKit
+import Eureka
+import JacKit
 
-class ViewController: UIViewController {
+fileprivate let jack = Jack.with(levelOfThisFile: .debug)
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+class RootViewController: FormViewController {
+
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    // Do any additional setup after loading the view, typically from a nib.
+
+    form +++ Section("简单分享")
+    <<< ButtonRow() { row in
+      row.title = "到微信"
+    }.onCellSelection { cell, row in
+      jack.warn("Share to Wechat")
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    <<< ButtonRow() { row in
+      row.title = "到微博"
+    }.onCellSelection { cell, row in
+      jack.warn("Share to Weibo")
     }
+    <<< ButtonRow() { row in
+      row.title = "到 QQ"
+    }.onCellSelection { cell, row in
+      jack.warn("Share to QQ")
+    }
+  }
 
 }
-
