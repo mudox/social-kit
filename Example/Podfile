@@ -1,14 +1,15 @@
 use_frameworks!
 platform :ios, '9.0'
 
-target 'SocialKit_Example' do
+target 'Example' do
 
-  pod 'SocialKit', :path => '../'
   pod 'JacKit', :path => '../../JacKit'
+  pod 'iOSKit', :path => '../../iOSKit'
+  pod 'SocialKit', :path => '../'
 
   pod 'Eureka'
 
-  target 'SocialKit_Tests' do
+  target 'Tests' do
     inherit! :search_paths
 
   end

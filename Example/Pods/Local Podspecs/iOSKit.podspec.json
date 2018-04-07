@@ -1,0 +1,80 @@
+{
+  "name": "iOSKit",
+  "version": "0.1.0",
+  "summary": "My iOS extension library",
+  "description": "My iOS app development toolbox",
+  "homepage": "https://github.com/mudox/ios-kit",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": "Mudox",
+  "source": {
+    "git": "https://github.com/mudox/ios-kit.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "9.0"
+  },
+  "default_subspecs": "Core",
+  "subspecs": [
+    {
+      "name": "Core",
+      "source_files": "iOSKit/Core/**/*",
+      "dependencies": {
+        "JacKit": [
+
+        ],
+        "RxSwift": [
+
+        ],
+        "RxCocoa": [
+
+        ]
+      }
+    },
+    {
+      "name": "MBP",
+      "source_files": "iOSKit/MBP/**/*.swift",
+      "dependencies": {
+        "MBProgressHUD": [
+          "~> 1.0"
+        ]
+      },
+      "resource_bundles": {
+        "Assets": "iOSKit/MBP/MBP.xcassets"
+      }
+    },
+    {
+      "name": "SVP",
+      "source_files": "iOSKit/SVP/**/*",
+      "dependencies": {
+        "SVProgressHUD": [
+
+        ]
+      }
+    },
+    {
+      "name": "NVA",
+      "source_files": "iOSKit/NVA/**/*",
+      "dependencies": {
+        "MBProgressHUD": [
+          "~> 1.0"
+        ]
+      }
+    },
+    {
+      "name": "OC",
+      "source_files": "iOSKit/OC/**/*"
+    },
+    {
+      "name": "SwiftyJSON",
+      "source_files": "iOSKit/SwiftyJSON/**/*",
+      "dependencies": {
+        "SwiftyJSON": [
+
+        ]
+      }
+    }
+  ]
+}

@@ -2,42 +2,51 @@ PODS:
   - CocoaLumberjack/Default (3.3.0)
   - CocoaLumberjack/Swift (3.3.0):
     - CocoaLumberjack/Default
-  - Eureka (4.0.1)
+  - Eureka (4.1.1)
+  - iOSKit (0.1.0):
+    - iOSKit/Core (= 0.1.0)
+  - iOSKit/Core (0.1.0):
+    - JacKit
+    - RxCocoa
+    - RxSwift
   - JacKit (1.0.0-beta1):
     - CocoaLumberjack/Swift (~> 3.3.0)
-  - PromiseKit (4.5.0):
-    - PromiseKit/Foundation (= 4.5.0)
-    - PromiseKit/QuartzCore (= 4.5.0)
-    - PromiseKit/UIKit (= 4.5.0)
-  - PromiseKit/CorePromise (4.5.0)
-  - PromiseKit/Foundation (4.5.0):
-    - PromiseKit/CorePromise
-  - PromiseKit/QuartzCore (4.5.0):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (4.5.0):
-    - PromiseKit/CorePromise
+  - RxCocoa (4.1.2):
+    - RxSwift (~> 4.0)
+  - RxSwift (4.1.2)
   - SocialKit (0.1.0):
     - JacKit
-    - PromiseKit
 
 DEPENDENCIES:
   - Eureka
+  - iOSKit (from `../../iOSKit`)
   - JacKit (from `../../JacKit`)
   - SocialKit (from `../`)
 
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - CocoaLumberjack
+    - Eureka
+    - RxCocoa
+    - RxSwift
+
 EXTERNAL SOURCES:
+  iOSKit:
+    :path: "../../iOSKit"
   JacKit:
-    :path: ../../JacKit
+    :path: "../../JacKit"
   SocialKit:
-    :path: ../
+    :path: "../"
 
 SPEC CHECKSUMS:
   CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
-  Eureka: c8bd5cc07143b6f66268c208d28a246c99b41955
-  JacKit: de46ba528274b33323f5f6c646ecae52c91e9711
-  PromiseKit: 9c1d9f6d7b65e3951a90bea7f407c56972be5d8e
-  SocialKit: 433cd19739d47c8410a9428a5cd1dfe9c9027f6a
+  Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
+  iOSKit: 3c4a9811b8044a0f8638cc0936fc26e845a12761
+  JacKit: 1e8b3f7e1441a325c39d29f891af81bd0cf5c28d
+  RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
+  RxSwift: e49536837d9901277638493ea537394d4b55f570
+  SocialKit: a9f4d695b48d6ecb365f545a507074bd9b8c14e9
 
-PODFILE CHECKSUM: a049e5a29fd4b9340483362d8c06f31b4fe05257
+PODFILE CHECKSUM: b2db100f8e7f3189e82cfdd4e2ebf34516c166a6
 
-COCOAPODS: 1.3.1
+COCOAPODS: 1.5.0

@@ -6,7 +6,6 @@
 //
 //
 
-#import "SSError.h"
 #import "SSOResult.h"
 
 NS_ASSUME_NONNULL_BEGIN

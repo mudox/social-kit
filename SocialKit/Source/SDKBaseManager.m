@@ -1,14 +1,7 @@
-//
-// SDKBaseManager.m
-// Pods
-//
-// Created by Mudox on 22/04/2017.
-//
-//
-
 #import "SDKBaseManager.h"
 #import "SneakBackGuard.h"
 #import "Types.h"
+#import "SSError.h"
 
 #import "WeiboSDKManager.h"
 

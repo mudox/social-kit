@@ -1,13 +1,7 @@
-//
-// SneakBackGuard.m
-// Pods
-//
-// Created by Mudox on 27/08/2017.
-//
-//
-
+#import "SSError.h"
 #import "SneakBackGuard.h"
 #import "SDKBaseManager.h"
+
 
 @import JacKit;
 

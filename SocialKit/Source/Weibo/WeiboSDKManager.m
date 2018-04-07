@@ -1,12 +1,4 @@
-//
-// WeiboSDKManager.m
-// ChangShou
-//
-// Created by Mudox on 28/02/2017.
-// Copyright © 2017 Mudox. All rights reserved.
-//
-
-#import "Types.h"
+#import "SSError.h"
 #import "WeiboSDKManager.h"
 #import "SSOResult.h"
 

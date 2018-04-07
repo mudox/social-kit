@@ -21,8 +21,8 @@ Pod::Spec.new do |s|
     'SocialKit/Library/**/*.{h,m,swift}'
   ]
   s.public_header_files = [
-    'SocialKit/Source/{Types,SSError,SSOResult,SocialKit}.h',
-    'SocialKit/Library/**/*.h'
+    'SocialKit/Source/{Types,SSOResult,SocialKit}.h',
+    #'SocialKit/Library/**/*.h'
   ]
   s.resources = [
     'SocialKit/Library/**/*.bundle',
@@ -41,6 +41,4 @@ Pod::Spec.new do |s|
   s.vendored_frameworks = 'SocialKit/Library/**/*.framework'
 
   s.dependency 'JacKit'
-  s.dependency 'PromiseKit'
-
 end

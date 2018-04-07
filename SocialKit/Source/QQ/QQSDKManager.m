@@ -1,17 +1,11 @@
-//
-// QQSDKManager.m
-//
-// Created by Mudox on 28/02/2017.
-// Copyright © 2017 Mudox. All rights reserved.
-//
-
-#import "QQSDKManager.h"
-#import "SSOResult.h"
-#import "Types.h"
-
 #import "TencentOAuth.h"
 #import "TencentApiInterface.h"
 #import "QQApiInterface.h"
+
+#import "SSError.h"
+#import "QQSDKManager.h"
+#import "SSOResult.h"
+#import "Types.h"
 
 @import JacKit;
 

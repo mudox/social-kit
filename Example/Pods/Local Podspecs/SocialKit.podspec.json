@@ -21,8 +21,7 @@
     "SocialKit/Library/**/*.{h,m,swift}"
   ],
   "public_header_files": [
-    "SocialKit/Source/{Types,SSError,SSOResult,SocialKit}.h",
-    "SocialKit/Library/**/*.h"
+    "SocialKit/Source/{Types,SSOResult,SocialKit}.h"
   ],
   "resources": [
     "SocialKit/Library/**/*.bundle",
@@ -55,9 +54,6 @@
   "vendored_frameworks": "SocialKit/Library/**/*.framework",
   "dependencies": {
     "JacKit": [
-
-    ],
-    "PromiseKit": [
 
     ]
   }

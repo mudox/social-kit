@@ -1,15 +1,9 @@
-////  WeChatSDKManager.m
-// ChangShou
-//
-// Created by Mudox on 28/02/2017.
-// Copyright © 2017 Mudox. All rights reserved.
-//
-
-#import "WeChatSDKManager.h"
-
-
 #import "WXApi.h"
 #import "WXApiObject.h"
+
+#import "SSError.h"
+#import "WeChatSDKManager.h"
+
 
 @import JacKit;
 
