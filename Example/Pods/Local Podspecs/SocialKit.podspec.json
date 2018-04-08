@@ -21,12 +21,15 @@
     "SocialKit/Library/**/*.{h,m,swift}"
   ],
   "public_header_files": [
-    "SocialKit/Source/{Types,SSOResult,SocialKit}.h"
+    "SocialKit/Source/**/*.h",
+    "SocialKit/Library/**/*.h"
   ],
   "resources": [
     "SocialKit/Library/**/*.bundle",
     "SocialKit/Library/**/*.framework"
   ],
+  "vendored_libraries": "SocialKit/Library/**/*.a",
+  "vendored_frameworks": "SocialKit/Library/**/*.framework",
   "pod_target_xcconfig": {
     "OTHER_LDFLAGS": "-all_load"
   },
@@ -50,10 +53,11 @@
     "sqlite3",
     "z"
   ],
-  "vendored_libraries": "SocialKit/Library/**/*.a",
-  "vendored_frameworks": "SocialKit/Library/**/*.framework",
   "dependencies": {
     "JacKit": [
+
+    ],
+    "RxSwift": [
 
     ]
   }

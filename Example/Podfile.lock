@@ -16,6 +16,7 @@ PODS:
   - RxSwift (4.1.2)
   - SocialKit (0.1.0):
     - JacKit
+    - RxSwift
 
 DEPENDENCIES:
   - Eureka
@@ -45,7 +46,7 @@ SPEC CHECKSUMS:
   JacKit: 1e8b3f7e1441a325c39d29f891af81bd0cf5c28d
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxSwift: e49536837d9901277638493ea537394d4b55f570
-  SocialKit: a9f4d695b48d6ecb365f545a507074bd9b8c14e9
+  SocialKit: 433f8aaacc5116d910279808f2cd98b4714f991c
 
 PODFILE CHECKSUM: b2db100f8e7f3189e82cfdd4e2ebf34516c166a6
 

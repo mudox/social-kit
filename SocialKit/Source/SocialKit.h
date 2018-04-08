@@ -1,42 +1,12 @@
 //
-// SocialKit.h
-// Pods
+//  SocialKit.h
+//  Pods
 //
-// Created by Mudox on 11/04/2017.
+//  Created by Mudox on 2018/4/9.
 //
-//
 
-@import Foundation;
+#ifndef SocialKit_h
+#define SocialKit_h
 
-#import "Types.h"
 
-NS_ASSUME_NONNULL_BEGIN
-
-@interface SocialKit : NSObject
-
-#pragma mark Service initialization
-
-+ (BOOL)initQQSDKWithAppKey: (NSString *)appKey;
-
-+ (BOOL)initWeChatSDKWithAppKey: (NSString *)appKey;
-
-+ (BOOL)initWeiboSDKWithAppKey: (NSString *)appKey;
-
-+ (BOOL)handleOpenURL: (NSURL *)url;
-
-#pragma mark SSO
-
-+ (void)ssoTo: (SSPlatform)platform completion: (SSSSOCompletionBlock)block NS_REFINED_FOR_SWIFT;
-
-#pragma mark Share
-
-+ (void)        to: (SSTarget)target
-         withTitle: (NSString *)title
-              text: (NSString *)text
-               url: (NSURL *)url
-  previewImageData: (NSData *)previewImageData
-        completion: (SSSharingCompletionBlock)block NS_REFINED_FOR_SWIFT;
-
-@end
-
-NS_ASSUME_NONNULL_END
+#endif /* SocialKit_h */

@@ -21,13 +21,15 @@ Pod::Spec.new do |s|
     'SocialKit/Library/**/*.{h,m,swift}'
   ]
   s.public_header_files = [
-    'SocialKit/Source/{Types,SSOResult,SocialKit}.h',
-    #'SocialKit/Library/**/*.h'
+    'SocialKit/Source/**/*.h',
+    'SocialKit/Library/**/*.h'
   ]
   s.resources = [
     'SocialKit/Library/**/*.bundle',
     'SocialKit/Library/**/*.framework'
   ]
+  s.vendored_libraries = 'SocialKit/Library/**/*.a'
+  s.vendored_frameworks = 'SocialKit/Library/**/*.framework'
 
   s.pod_target_xcconfig = { 'OTHER_LDFLAGS' => '-all_load' }
 
@@ -37,8 +39,6 @@ Pod::Spec.new do |s|
   ]
   s.libraries = 'stdc++', 'sqlite3', 'iconv', 'c++', 'sqlite3', 'z'
 
-  s.vendored_libraries = 'SocialKit/Library/**/*.a'
-  s.vendored_frameworks = 'SocialKit/Library/**/*.framework'
-
   s.dependency 'JacKit'
+  s.dependency 'RxSwift'
 end
