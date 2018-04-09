@@ -29,6 +29,26 @@ class MainVC: FormViewController {
     return self.form.values()["qqTarget"] as! QQ.SharingTarget
   }
 
+  var image: Data {
+    let image = #imageLiteral(resourceName: "ImageToShare")
+    return UIImagePNGRepresentation(image)!
+  }
+
+  let url = URL(string: "https://github.com/mudox")!
+
+  func completion(for action: String) -> QQ.SharingCompletion {
+    return { [weak self] error in
+      guard let ss = self else { return }
+      if let error = error {
+        ss.view.mbp.execute(.failure(title: "分享失败"))
+        jack.error("Sharing \(action) to \(ss.qqTarget) failed: \(error)")
+      } else {
+        ss.view.mbp.execute(.success(title: "分享成功"))
+        jack.info("Sharing \(action) to \(ss.qqTarget) succeeded")
+      }
+    }
+  }
+
   override func viewDidLoad() {
     super.viewDidLoad()
     // Do any additional setup after loading the view, typically from a nib.
@@ -53,40 +73,52 @@ class MainVC: FormViewController {
       $0.title = "Target"
       $0.options = [.qq, .tim]
       $0.value = $0.options[0]
+      $0.displayValueFor = {
+        switch $0! {
+        case .qq: return "QQ"
+        case .tim: return "TIM"
+        }
+      }
     }
 
     <<< ButtonRow() {
       $0.title = "Simple text"
     }.onCellSelection { [weak self] cell, row in
       guard let ss = self else { return }
-      QQ.share(to: ss.qqTarget, text: "SocialKit test: share a simple text message to QQ") { error in
-        if let error = error {
-          ss.view.mbp.execute(.failure(title: "分享失败"))
-          jack.error("Sharing a simple text message to \(ss.qqTarget) failed: \(error)")
-        } else {
-          ss.view.mbp.execute(.success(title: "分享成功"))
-          jack.info("Sharing a simple text message to \(ss.qqTarget) succeeded")
-        }
-      }
+      QQ.share(
+        to: ss.qqTarget,
+        text: "Hey, this is a test message from SocialKit framework",
+        completion: ss.completion(for: "text")
+      )
     }
 
     <<< ButtonRow() {
       $0.title = "Local Image"
     }.onCellSelection { [weak self] cell, row in
       guard let ss = self else { return }
-      let image = #imageLiteral(resourceName: "ImageToShare")
-      let data = UIImagePNGRepresentation(image)!
-      QQ.share(to: ss.qqTarget, image: data) { error in
-        if let error = error {
-          ss.view.mbp.execute(.failure(title: "分享失败"))
-          jack.error("Sharing a local image message to \(ss.qqTarget) failed: \(error)")
-        } else {
-          ss.view.mbp.execute(.success(title: "分享成功"))
-          jack.info("Sharing a local image message to \(ss.qqTarget) succeeded")
-        }
-      }
+      QQ.share(
+        to: ss.qqTarget,
+        image: ss.image,
+        title: ss.titleInput,
+        description: ss.descriptionInput,
+        completion: ss.completion(for: "image")
+      )
     }
 
+
+    <<< ButtonRow() {
+      $0.title = "Link"
+    }.onCellSelection { [weak self] cell, row in
+      guard let ss = self else { return }
+      QQ.share(
+        to: ss.qqTarget,
+        link: ss.url,
+        previewImage: ss.image,
+        title: ss.titleInput,
+        description: ss.descriptionInput,
+        completion: ss.completion(for: "link")
+      )
+    }
 
   }
 
