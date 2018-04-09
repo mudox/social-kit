@@ -15,7 +15,7 @@ import iOSKit
 import JacKit
 fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 
-class RootViewController: FormViewController {
+class MainVC: FormViewController {
 
   var titleInput: String? {
     return self.form.values()["title"] as? String
@@ -75,7 +75,8 @@ class RootViewController: FormViewController {
     }.onCellSelection { [weak self] cell, row in
       guard let ss = self else { return }
       let image = #imageLiteral(resourceName: "ImageToShare")
-      QQ.share(to: ss.qqTarget, image: image) { error in
+      let data = UIImagePNGRepresentation(image)!
+      QQ.share(to: ss.qqTarget, image: data) { error in
         if let error = error {
           ss.view.mbp.execute(.failure(title: "分享失败"))
           jack.error("Sharing a local image message to \(ss.qqTarget) failed: \(error)")

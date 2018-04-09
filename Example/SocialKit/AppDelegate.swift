@@ -25,6 +25,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     SocialPlatforms.load([
       .qq(appKey: "1106041023")
     ])
+    
+    window = UIWindow(frame: UIScreen.main.bounds)
+    window?.rootViewController = MainVC()
+    window?.makeKeyAndVisible()
 
     return true
   }
