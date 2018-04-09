@@ -10,6 +10,7 @@ import UIKit
 import Eureka
 
 import SocialKit
+import iOSKit
 
 import JacKit
 fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
@@ -38,15 +39,12 @@ class RootViewController: FormViewController {
 
     <<< TextRow("title") {
       $0.title = "Title"
-      $0.value = "SocialKit Test"
+      $0.value = "Test"
     }
 
     <<< TextRow("description") {
       $0.title = "Description"
-      $0.value = """
-        SocialKit is a all-in-one framwork for deveopers to \
-        interact with Chinese common social platform SDKs"
-        """
+      $0.value = "SocialKit framework"
     }
 
     form +++ Section("QQ")
@@ -63,8 +61,10 @@ class RootViewController: FormViewController {
       guard let ss = self else { return }
       QQ.share(to: ss.qqTarget, text: "SocialKit test: share a simple text message to QQ") { error in
         if let error = error {
+          ss.view.mbp.execute(.failure(title: "分享失败"))
           jack.error("Sharing a simple text message to \(ss.qqTarget) failed: \(error)")
         } else {
+          ss.view.mbp.execute(.success(title: "分享成功"))
           jack.info("Sharing a simple text message to \(ss.qqTarget) succeeded")
         }
       }
@@ -77,8 +77,10 @@ class RootViewController: FormViewController {
       let image = #imageLiteral(resourceName: "ImageToShare")
       QQ.share(to: ss.qqTarget, image: image) { error in
         if let error = error {
+          ss.view.mbp.execute(.failure(title: "分享失败"))
           jack.error("Sharing a local image message to \(ss.qqTarget) failed: \(error)")
         } else {
+          ss.view.mbp.execute(.success(title: "分享成功"))
           jack.info("Sharing a local image message to \(ss.qqTarget) succeeded")
         }
       }
