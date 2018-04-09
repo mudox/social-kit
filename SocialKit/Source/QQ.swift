@@ -155,7 +155,7 @@ public class QQ: SocialPlatformAgent {
 
   // MARK: Login
 
-  // MARK: Sharing
+  // MARK: Sharing basic method
 
   /// Base method of sharing, the more convenient `shareXXX` methods is prefered.
   ///
@@ -166,16 +166,18 @@ public class QQ: SocialPlatformAgent {
   public func send(to target: SharingTarget = .qq, object: QQApiObject, completion block: SharingCompletion?) {
     QQ.shared.begin(.sharing(completion: block))
 
-    let request = SendMessageToQQReq(content: object)!
     switch target {
     case .qq:
-      request.message.shareDestType = ShareDestTypeQQ
-      QQApiInterface.send(request)
+      object.shareDestType = ShareDestTypeQQ
     case .tim:
-      request.message.shareDestType = ShareDestTypeTIM
-      QQApiInterface.send(request)
+      object.shareDestType = ShareDestTypeTIM
     }
+
+    let request = SendMessageToQQReq(content: object)!
+    QQApiInterface.send(request)
   }
+
+  // MARK: Share text message
 
   /// Share a local image.
   ///
@@ -183,81 +185,127 @@ public class QQ: SocialPlatformAgent {
   ///   - target: Sharing target.
   ///   - text: The text content to share.
   ///   - block: completion block.
-  public static func share(to target: SharingTarget = .qq, text: String, completion block: SharingCompletion?) {
-    QQ.shared.share(to: target, text: text, completion: block)
-  }
-
-  private func share(to target: SharingTarget = .qq, text: String, completion block: SharingCompletion?) {
-    let object = QQApiTextObject(text: text)
-    send(to: target, object: object!, completion: block)
-  }
-  
-  /// Share a local image.
-  ///
-  /// - Parameters:
-  ///   - target: Sharing target.
-  ///   - image: The image object to share.
-  ///   - block: completion block.
-  public static func share(to target: SharingTarget = .qq, image: UIImage, completion block: SharingCompletion?) {
-    QQ.shared.share(to: target, image: image, completion: block)
-  }
-
-  private func share(to target: SharingTarget = .qq, image: UIImage, completion block: SharingCompletion?) {
-    begin(.sharing(completion: block))
-    if let data = UIImagePNGRepresentation(image) {
-      task = nil // suppress checking panic
-      _share(imageData: data, completion: block)
-    } else {
-      end(with: .sharing(error: SocialError.api(reason: "Converting UIImage to data failed, need a PNG compatible UIImage object")))
-    }
-
-  }
-
-  /// Share a local image.
-  ///
-  /// - Parameters:
-  ///   - target: Sharing target.
-  ///   - url: Local image url.
-  ///   - block: completion block.
-  public static func share(to target: SharingTarget = .qq, imageAt url: URL, completion block: SharingCompletion?) {
-    QQ.shared.share(to: target, imageAt: url, completion: block)
-  }
-
-  private func share(to target: SharingTarget = .qq, imageAt url: URL, completion block: SharingCompletion?) {
-    begin(.sharing(completion: block))
-
-    do {
-      let data = try Data(contentsOf: url)
-
-      task = nil // suppress checking panic
-      _share(to: target, imageData: data, completion: block)
-    } catch {
-      end(with: .sharing(error: error))
-    }
-
-  }
-
-
-  /// Share a local image.
-  ///
-  /// - Parameters:
-  ///   - target: Sharing target.
-  ///   - imageData: Image data, not bigger than 5M.
-  ///   - block: completion block.
-  public static func share(to target: SharingTarget = .qq, imageData: Data, completion block: SharingCompletion?) {
-    QQ.shared._share(to: target, imageData: imageData, completion: block)
-  }
-
-  private func _share(to target: SharingTarget = .qq, imageData: Data, completion block: SharingCompletion?) {
-    let object = QQApiImageObject(
-      data: imageData,
-      previewImageData: imageData,
-      title: nil,
-      description: nil
+  public static func share(
+    to target: SharingTarget = .qq,
+    text: String, completion
+    block: SharingCompletion?
+  ) {
+    QQ.shared._share(
+      to: target,
+      text: text,
+      completion: block
     )
-    send(to: target, object: object!, completion: block)
   }
 
+  private func _share(
+    to target: SharingTarget = .qq,
+    text: String,
+    completion block: SharingCompletion?
+  ) {
+    let object = QQApiTextObject(text: text)
+    send(
+      to: target,
+      object: object!,
+      completion: block
+    )
+  }
+
+  // MARK: Share single image
+
+  /// Share a local image.
+  ///
+  /// - Parameters:
+  ///   - target: Sharing target.
+  ///   - imageData: Image data, not bigger than __5M__.
+  ///   - title: title.
+  ///   - description: description.
+  ///   - block: completion block.
+  public static func share(
+    to target: SharingTarget = .qq,
+    image data: Data,
+    title: String? = nil,
+    description: String? = nil,
+    completion block: SharingCompletion?
+  ) {
+    QQ.shared._share(
+      to: target,
+      image: data,
+      title: title,
+      description: description,
+      completion: block
+    )
+  }
+
+  private func _share(
+    to target: SharingTarget = .qq,
+    image data: Data,
+    title: String? = nil,
+    description: String? = nil,
+    completion block: SharingCompletion?
+  ) {
+    let object = QQApiImageObject(
+      data: data,
+      previewImageData: data,
+      title: title,
+      description: description
+    )
+    send(
+      to: target,
+      object: object!,
+      completion: block
+    )
+  }
+
+  // MARK: Share news URL
+
+  /// Share a local image.
+  ///
+  /// - Parameters:
+  ///   - target: Sharing target.
+  ///   - url: New address.
+  ///   - previewImage: Preview mage data, not bigger than __1M__.
+  ///   - title: title.
+  ///   - description: description.
+  ///   - block: completion block.
+  public static func share(
+    to target: SharingTarget = .qq,
+    link url: URL,
+    previewImage data: Data,
+    title: String? = nil,
+    description: String? = nil,
+    completion block: SharingCompletion?
+  ) {
+    QQ.shared._share(
+      to: target,
+      link: url,
+      previewImage: data,
+      title: title,
+      description: description,
+      completion: block
+    )
+  }
+
+  private func _share(
+    to target: SharingTarget = .qq,
+    link url: URL,
+    previewImage data: Data,
+    title: String? = nil,
+    description: String? = nil,
+    completion block: SharingCompletion?
+  ) {
+    let object = QQApiNewsObject(
+      url: url,
+      title: title,
+      description: description,
+      previewImageData: data,
+      targetContentType: QQApiURLTargetTypeNews
+    )
+    send(
+      to: target,
+      object: object!,
+      completion: block
+    )
+  }
 }
 
 // MARK: - TencentSessionDelegate
