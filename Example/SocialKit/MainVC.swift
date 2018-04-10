@@ -77,6 +77,8 @@ class MainVC: FormViewController {
         switch $0! {
         case .qq: return "QQ"
         case .tim: return "TIM"
+        case .qzone: return "QZone"
+        case .favorites: return "Favorites"
         }
       }
     }
@@ -91,7 +93,7 @@ class MainVC: FormViewController {
         completion: ss.completion(for: "text")
       )
     }
-
+ 
     <<< ButtonRow() {
       $0.title = "Local Image"
     }.onCellSelection { [weak self] cell, row in

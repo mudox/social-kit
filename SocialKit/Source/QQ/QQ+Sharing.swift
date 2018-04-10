@@ -3,87 +3,7 @@ import Foundation
 import JacKit
 fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
 
-public class QQ: SocialPlatformAgent {
-
-  public enum SharingTarget {
-    // share QQ friend
-    case qq
-    // share to QZone timeline in QQ app
-    case tim
-    // qzone is integrate as a sending target option in both of the apps above.
-  }
-
-  public static let shared = QQ()
-
-  private var oauth: TencentOAuth!
-
-  // MARK: Platform init
-
-  override private init() {
-    super.init()
-    jack.info(platformInfo, from: .custom("QQ Platform Loaded"))
-  }
-
-  public static func initPlatform(appKey: String) {
-    let oauth = TencentOAuth(appId: appKey, andDelegate: QQ.shared)
-    QQ.shared.oauth = oauth
-  }
-
-  public static func open(_ url: URL) -> Bool {
-    let handledByTencentOAuth = TencentOAuth.handleOpen(url)
-    let handledByQQApiInterface = QQApiInterface.handleOpen(url, delegate: shared)
-
-    jack.verbose("""
-    TencentOAuth: \(handledByTencentOAuth ? "√" : "x") | \
-    QQApiInterface: \(handledByQQApiInterface ? "√" : "x")
-    """)
-
-    return handledByTencentOAuth || handledByQQApiInterface
-  }
-
-  // MARK: Helpers
-
-  private var platformInfo: String {
-    var version = "\(TencentOAuth.sdkVersion() ?? "unkown") - \(TencentOAuth.sdkSubVersion() ?? "unknown")"
-    if TencentOAuth.isLiteSDK() {
-      version += " (Lite)"
-    }
-
-    var qq = ""
-    if QQApiInterface.isQQInstalled() {
-      qq = "Installed"
-      if !TencentOAuth.iphoneQQSupportSSOLogin() {
-        qq += " Login ⚠️"
-      }
-      if !QQApiInterface.isQQSupportApi() {
-        qq += " API ⚠️"
-      }
-      if !QQApiInterface.isSupportPushToQZone() {
-        qq += " QZone ⚠️"
-      }
-    } else {
-      qq = "Not installed"
-    }
-
-    var tim = ""
-    if QQApiInterface.isTIMInstalled() {
-      tim = "Installed"
-      if !TencentOAuth.iphoneTIMSupportSSOLogin() {
-        tim += " SSO ⚠️"
-      }
-      if !QQApiInterface.isTIMSupportApi() {
-        tim += " API ⚠️"
-      }
-    } else {
-      tim = "No installed"
-    }
-
-    return """
-    SDK : \(version)
-     QQ : \(qq)
-    TIM : \(tim)
-    """
-  }
+extension QQ {
 
   fileprivate func handleSendResultCode(_ code: QQApiSendResultCode) {
 
@@ -99,7 +19,7 @@ public class QQ: SocialPlatformAgent {
       case .sharing:
         end(with: .sharing(error: error))
       case .login:
-        end(with: .login(nil, error: error))
+        jack.assertFailure("Property `.task` should be a Task.sharing case")
       }
     }
 
@@ -153,10 +73,6 @@ public class QQ: SocialPlatformAgent {
     }
   }
 
-  // MARK: Login
-
-  // MARK: Sharing basic method
-
   /// Base method of sharing, the more convenient `shareXXX` methods is prefered.
   ///
   /// - Parameters:
@@ -171,13 +87,19 @@ public class QQ: SocialPlatformAgent {
       object.shareDestType = ShareDestTypeQQ
     case .tim:
       object.shareDestType = ShareDestTypeTIM
+    case .qzone:
+      object.shareDestType = ShareDestTypeQQ
+      object.cflag = UInt64(kQQAPICtrlFlagQZoneShareOnStart)
+    case .favorites:
+      object.shareDestType = ShareDestTypeQQ
+      object.cflag = UInt64(kQQAPICtrlFlagQQShareFavorites)
     }
 
     let request = SendMessageToQQReq(content: object)!
     QQApiInterface.send(request)
   }
 
-  // MARK: Share text message
+  // MARK: - Share a Text Message
 
   /// Share a local image.
   ///
@@ -210,7 +132,7 @@ public class QQ: SocialPlatformAgent {
     )
   }
 
-  // MARK: Share single image
+  // MARK: - Share an Image
 
   /// Share a local image.
   ///
@@ -223,7 +145,7 @@ public class QQ: SocialPlatformAgent {
   public static func share(
     to target: SharingTarget = .qq,
     image data: Data,
-    title: String? = nil,
+    title: String,
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
@@ -239,7 +161,7 @@ public class QQ: SocialPlatformAgent {
   private func _share(
     to target: SharingTarget = .qq,
     image data: Data,
-    title: String? = nil,
+    title: String,
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
@@ -256,7 +178,7 @@ public class QQ: SocialPlatformAgent {
     )
   }
 
-  // MARK: Share news URL
+  // MARK: - Share a Link
 
   /// Share a local image.
   ///
@@ -271,7 +193,7 @@ public class QQ: SocialPlatformAgent {
     to target: SharingTarget = .qq,
     link url: URL,
     previewImage data: Data,
-    title: String? = nil,
+    title: String,
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
@@ -289,7 +211,7 @@ public class QQ: SocialPlatformAgent {
     to target: SharingTarget = .qq,
     link url: URL,
     previewImage data: Data,
-    title: String? = nil,
+    title: String,
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
@@ -305,22 +227,6 @@ public class QQ: SocialPlatformAgent {
       object: object!,
       completion: block
     )
-  }
-}
-
-// MARK: - TencentSessionDelegate
-extension QQ: TencentSessionDelegate {
-
-  public func tencentDidLogin() {
-    fatalError("Unimplemented")
-  }
-
-  public func tencentDidNotLogin(_ cancelled: Bool) {
-    fatalError("Unimplemented")
-  }
-
-  public func tencentDidNotNetWork() {
-    fatalError("Unimplemented")
   }
 
 }
@@ -351,3 +257,4 @@ extension QQ: QQApiInterfaceDelegate {
   }
 
 }
+
