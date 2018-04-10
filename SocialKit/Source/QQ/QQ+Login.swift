@@ -3,23 +3,73 @@ import Foundation
 import JacKit
 fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
 
-class QQLoginResult: BaseLoginResult {
+public class QQLoginResult: BaseLoginResult {
 
-  let nickname: String
-  let avatarURL: URL
-  let originalJSON: [String: Any]
+  public enum Gender {
+    case male, female
+  }
 
-  init(accessToken: String, openID: String, expirationDate: Date, nickname: String, avatarURL: URL, originalJSON: [String: Any]) {
-    self.nickname = nickname
-    self.avatarURL = avatarURL
-    self.originalJSON = originalJSON
+  public let nickname: String?
+  public let city: String?
+  public let gender: Gender?
+  public let avatarURL: URL?
 
-    super.init(accessToken: accessToken, openID: openID, expirationDate: expirationDate)
+  public let originalJSON: [String: Any]
+
+  init(response: APIResponse, oauth: TencentOAuth) throws {
+
+    guard response.retCode == URLREQUEST_SUCCEED.rawValue else {
+      throw SocialError.api(reason: "`response.retCode` != `URLREQUEST_SUCCEED.rawValue`")
+    }
+
+    guard let json = response.jsonResponse as? [String: Any] else {
+      throw SocialError.api(reason: "fail to case response.jsonResponse to `[String: Any]`")
+    }
+
+    originalJSON = json
+    
+    nickname = json["nickname"] as? String
+    avatarURL = URL(string: json["figureurl_qq_2"] as? String ?? "")
+    city = json["city"] as? String
+
+    if let text = json["gender"] as? String {
+      if text == "男" {
+        gender = .male
+      } else {
+        gender = .female
+      }
+    } else {
+      gender = nil
+    }
+
+    guard let token = oauth.accessToken, !token.isEmpty else {
+      throw SocialError.api(reason: "`oauth.accessToken` is nil or empty")
+    }
+
+    guard let id = oauth.openId, !id.isEmpty else {
+      throw SocialError.api(reason: "`oauth.openId` is nil or empty")
+    }
+
+    guard let date = oauth.expirationDate else {
+      throw SocialError.api(reason: "`oauth.expirationDate` is nil")
+    }
+
+    guard date > Date() else {
+      throw SocialError.api(reason: "got a already expired date")
+    }
+
+    super.init(accessToken: token, openID: id, expirationDate: date)
   }
 }
 
 extension QQ {
-  func login() {
+  public static func login(completion: @escaping LoginCompletion) {
+    QQ.shared._login(completion: completion)
+  }
+
+  private func _login(completion: @escaping LoginCompletion) {
+    begin(.login(completion: completion))
+
     let permissions = [
       kOPEN_PERMISSION_GET_USER_INFO
     ]
@@ -30,13 +80,16 @@ extension QQ {
 extension QQ: TencentSessionDelegate {
 
   public func tencentDidLogin() {
-    guard let token = oauth.accessToken, !token.isEmpty else {
-      let error = SocialError.api(reason: """
-        Login operation failed with internal error: authorization passed \
-        but got an empty access token.
-        """)
-      end(with: .login(result: nil, error: error))
-      return
+    guard let token = oauth.accessToken, !token.isEmpty,
+      let openID = oauth.openId, !openID.isEmpty,
+      let date = oauth.expirationDate, date > Date()
+      else {
+        let error = SocialError.api(reason: """
+          invalid credential data. E.g. nil access token, openID, expiration \
+          date, or already expired.
+          """)
+        end(with: .login(result: nil, error: error))
+        return
     }
 
     // next step
@@ -46,52 +99,26 @@ extension QQ: TencentSessionDelegate {
   public func tencentDidNotLogin(_ cancelled: Bool) {
     var error: Error
     if cancelled {
-      error = SocialError.canceled(reason: "Login operation is canceled")
+      error = SocialError.canceled(reason: "canceled by user")
     } else {
-      error = SocialError.other(reason: "Login operation failed with unknown reason")
+      error = SocialError.other(reason: nil)
     }
     end(with: .login(result: nil, error: error))
 
   }
 
   public func tencentDidNotNetWork() {
-    let error = SocialError.send(reason: "Login operation failed with network error")
+    let error = SocialError.send(reason: "network error")
     end(with: .login(result: nil, error: error))
   }
 
   public func getUserInfoResponse(_ response: APIResponse!) {
-    guard response.retCode == URLREQUEST_SUCCEED.rawValue else {
-      let error = SocialError.api(reason: """
-        Fetching user information failed: \(response.message ?? "reason unknown")
-        """)
+    do {
+      let result = try QQLoginResult(response: response, oauth: oauth)
+      end(with: .login(result: result, error: nil))
+    } catch {
       end(with: .login(result: nil, error: error))
-      return
     }
-
-    guard let json = response.jsonResponse as? [String: Any],
-      let nickname = json["nickname"] as? String,
-      let avatarURL = URL(string: json["figureurl_qq_2"] as? String ?? ""),
-      let accessToken = oauth.accessToken,
-      let openID = oauth.openId,
-      let expirationDate = oauth.expirationDate
-      else {
-        let error = SocialError.api(reason: """
-          Fetching user information failed: no error message, but got a nil JSON content.
-          """)
-        end(with: .login(result: nil, error: error))
-        return
-    }
-
-    let result = QQLoginResult(
-      accessToken: accessToken,
-      openID: openID,
-      expirationDate: expirationDate,
-      nickname: nickname,
-      avatarURL: avatarURL,
-      originalJSON: json
-    )
-
-    end(with: .login(result: result, error: nil))
   }
 }
 

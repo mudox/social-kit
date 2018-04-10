@@ -8,6 +8,7 @@
 
 import UIKit
 import Eureka
+import Kingfisher
 
 import SocialKit
 import iOSKit
@@ -16,6 +17,8 @@ import JacKit
 fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 
 class MainVC: FormViewController {
+  
+  var loginResultView: QQLoginResultView!
 
   var titleInput: String? {
     return self.form.values()["title"] as? String
@@ -51,11 +54,40 @@ class MainVC: FormViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+
+    let nib = UINib(nibName: "QQLoginResultView", bundle: nil)
+    let view = nib.instantiate(withOwner: nil, options: nil).first as! QQLoginResultView
+    tableView.tableHeaderView = view
+    loginResultView = view
 
     form.inlineRowHideOptions = [.AnotherInlineRowIsShown, .FirstResponderChanges]
 
-    form +++ Section("COMMON INPUTS")
+    form +++ Section()
+
+    <<< ButtonRow() {
+      $0.title = "Login"
+    }.onCellSelection { cell, row in
+      QQ.login { [weak self] baseResult, error in
+        guard let ss = self else { return }
+        
+        guard let baseResult = baseResult else {
+          jack.error("Failed to login QQ: \(error!)")
+          ss.view.mbp.execute(.failure(title: "登录失败"))
+          return
+        }
+
+        guard let result = baseResult as? QQLoginResult else {
+          jack.error("Can not cast LoginResult instance to QQLoginResult")
+          ss.view.mbp.execute(.failure(title: "登录失败"))
+          return
+        }
+        
+        ss.view.mbp.execute(.success(title: "登录成功"))
+        ss.loginResultView.set(with: result)
+      }
+    }
+
+    form +++ Section("INPUTS")
 
     <<< TextRow("title") {
       $0.title = "Title"
@@ -66,8 +98,6 @@ class MainVC: FormViewController {
       $0.title = "Description"
       $0.value = "SocialKit framework"
     }
-
-    form +++ Section("QQ")
 
     <<< PickerInlineRow<QQ.SharingTarget>("qqTarget") {
       $0.title = "Target"
@@ -83,6 +113,8 @@ class MainVC: FormViewController {
       }
     }
 
+    form +++ Section("Share")
+
     <<< ButtonRow() {
       $0.title = "Simple text"
     }.onCellSelection { [weak self] cell, row in
@@ -93,7 +125,7 @@ class MainVC: FormViewController {
         completion: ss.completion(for: "text")
       )
     }
- 
+
     <<< ButtonRow() {
       $0.title = "Local Image"
     }.onCellSelection { [weak self] cell, row in
@@ -101,7 +133,7 @@ class MainVC: FormViewController {
       QQ.share(
         to: ss.qqTarget,
         image: ss.image,
-        title: ss.titleInput,
+        title: ss.titleInput ?? "Test SocialKit",
         description: ss.descriptionInput,
         completion: ss.completion(for: "image")
       )
@@ -116,7 +148,7 @@ class MainVC: FormViewController {
         to: ss.qqTarget,
         link: ss.url,
         previewImage: ss.image,
-        title: ss.titleInput,
+        title: ss.titleInput ?? "Test SocialKit",
         description: ss.descriptionInput,
         completion: ss.completion(for: "link")
       )

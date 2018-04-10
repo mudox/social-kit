@@ -14,6 +14,8 @@
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
 		ABBF42763CC8726D7F2AEAAC /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA5600B60ECF57BE0073C81 /* Pods_Tests.framework */; };
 		CCE0F1EDB3D3FA4DB41206FD /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0EBC9257A8ABB8C5ED3FC03 /* Pods_Demo.framework */; };
+		F423981A207D1D070041BEC0 /* QQLoginResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239819207D1D070041BEC0 /* QQLoginResultView.swift */; };
+		F423981C207D1D270041BEC0 /* QQLoginResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F423981B207D1D270041BEC0 /* QQLoginResultView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,8 @@
 		D1F9F2B4588E63C57017D735 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6143785D5B90451D120C3B5 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		E2AB3809EBDFCE67F4A63B5A /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
+		F4239819207D1D070041BEC0 /* QQLoginResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QQLoginResultView.swift; sourceTree = "<group>"; };
+		F423981B207D1D270041BEC0 /* QQLoginResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QQLoginResultView.xib; sourceTree = "<group>"; };
 		F4A8484E2078B49000C0DA11 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -118,6 +122,8 @@
 		607FACD21AFB9204008FA782 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
+				F4239819207D1D070041BEC0 /* QQLoginResultView.swift */,
+				F423981B207D1D270041BEC0 /* QQLoginResultView.xib */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* MainVC.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
@@ -255,6 +261,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
+				F423981C207D1D270041BEC0 /* QQLoginResultView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,6 +285,7 @@
 				"${BUILT_PRODUCTS_DIR}/CocoaLumberjack/CocoaLumberjack.framework",
 				"${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework",
 				"${BUILT_PRODUCTS_DIR}/JacKit/JacKit.framework",
+				"${BUILT_PRODUCTS_DIR}/Kingfisher/Kingfisher.framework",
 				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/RxCocoa/RxCocoa.framework",
 				"${BUILT_PRODUCTS_DIR}/RxSwift/RxSwift.framework",
@@ -289,6 +297,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/CocoaLumberjack.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Eureka.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/JacKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Kingfisher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxCocoa.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RxSwift.framework",
@@ -343,6 +352,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F423981A207D1D070041BEC0 /* QQLoginResultView.swift in Sources */,
 				607FACD81AFB9204008FA782 /* MainVC.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);

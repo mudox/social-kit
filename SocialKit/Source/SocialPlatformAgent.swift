@@ -4,23 +4,23 @@ import JacKit
 fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
 
 public class BaseLoginResult {
-  
-  let accessToken: String
-  let openID: String
-  let expiration: Date
-  
+
+  public let accessToken: String
+  public let openID: String
+  public let expirationDate: Date
+
   init(accessToken: String, openID: String, expirationDate: Date) {
     self.accessToken = accessToken
     self.openID = openID
-    self.expiration = expirationDate
+    self.expirationDate = expirationDate
   }
-  
+
 }
 
 
 /// Base class for concrete social platform agent classes
 public class SocialPlatformAgent: NSObject {
-  
+
   // MARK: - Manage Task
 
   enum Task {
@@ -50,15 +50,19 @@ public class SocialPlatformAgent: NSObject {
     case let .sharing(error: error):
       _sharingCompletion(error)
     case let .login(result, error):
+      jack.assert(
+        (result == nil && error != nil) || (result != nil && error == nil),
+        "result and error should not be nil or non-nil at the same time"
+      )
       _loginCompletion(result, error)
     }
   }
-  
+
   // MARK: - Manage Completion Blocks
-  
+
   public typealias SharingCompletion = (Error?) -> ()
   public typealias LoginCompletion = (BaseLoginResult?, Error?) -> ()
-  
+
   // default sharing completion block
   private let _defaultSharingCompletion: SharingCompletion = { error in
     if let error = error {
@@ -67,18 +71,18 @@ public class SocialPlatformAgent: NSObject {
       jack.debug("Unhandled social sharing task result: success")
     }
   }
-  
+
   // default login completion block
   private let _defaultLoginCompletion: LoginCompletion = { result, error in
     // check nullability combination
     if result == nil && error == nil {
       jack.error("reuslt and error should not be nil at the same time")
     }
-    
+
     if result != nil && error != nil {
       jack.error("reuslt and error should not be non-nil at the same time")
     }
-    
+
     if let error = error {
       jack.error("Unhandled social login task error: \(error)")
     } else {

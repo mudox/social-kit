@@ -13,6 +13,7 @@ PODS:
     - MBProgressHUD (~> 1.0)
   - JacKit (1.0.0-beta1):
     - CocoaLumberjack/Swift (~> 3.3.0)
+  - Kingfisher (4.7.0)
   - MBProgressHUD (1.1.0)
   - RxCocoa (4.1.2):
     - RxSwift (~> 4.0)
@@ -26,12 +27,14 @@ DEPENDENCIES:
   - iOSKit (from `../../iOSKit`)
   - iOSKit/MBP (from `../../iOSKit`)
   - JacKit (from `../../JacKit`)
+  - Kingfisher
   - SocialKit (from `../`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - CocoaLumberjack
     - Eureka
+    - Kingfisher
     - MBProgressHUD
     - RxCocoa
     - RxSwift
@@ -49,11 +52,12 @@ SPEC CHECKSUMS:
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
   iOSKit: dbf019719166265c91f98785de802bc1f6a49207
   JacKit: 1e8b3f7e1441a325c39d29f891af81bd0cf5c28d
+  Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   SocialKit: 433f8aaacc5116d910279808f2cd98b4714f991c
 
-PODFILE CHECKSUM: b8a87c4385a1682b8b2df84b67a7d80a06c3de68
+PODFILE CHECKSUM: 75498a9af4c3c2c9211dc80af922589805ac1f43
 
 COCOAPODS: 1.5.0

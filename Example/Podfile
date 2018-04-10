@@ -9,6 +9,7 @@ target 'Demo' do
   pod 'SocialKit',  :path => '../'
 
   pod 'Eureka'
+  pod 'Kingfisher'
 
   target 'Tests' do
     inherit! :search_paths
