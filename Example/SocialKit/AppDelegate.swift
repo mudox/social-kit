@@ -10,6 +10,7 @@ import UIKit
 
 import SocialKit
 import iOSKit
+import Eureka
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,14 +19,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
-    
+
     application.mdx.dumpInfo()
     application.mdx.observeAppStates()
 
+    setupEurekaFormStyle()
+
     SocialPlatforms.load([
-      .qq(appKey: "1106041023")
+        .qq(appID: "1106041023"),
+        .weChat(appID: "wx38c88a78775189e6"),
     ])
-    
+
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = MainVC()
     window?.makeKeyAndVisible()

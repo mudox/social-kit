@@ -5,25 +5,23 @@ fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
 
 extension QQ {
 
-  fileprivate func handleSendResultCode(_ code: QQApiSendResultCode) {
+  public enum SharingTarget {
+    // open QQ / TIM, show a sharing targets selector
+    case qq
+    case tim
+    // open QQ and jump directly to integrated QZone interface
+    case qzone
+    // defaults to open QQ and jump directly to Favorites interface
+    case favorites
+  }
 
-    guard let task = self.task else {
-      jack.assertFailure("Property `task` should not be nil")
-      // no task stored, no need to call the default completion block
-      return
-    }
-
-    var error: SocialError? = nil
-    defer {
-      switch task {
-      case .sharing:
-        end(with: .sharing(error: error))
-      case .login:
-        jack.assertFailure("Property `.task` should be a Task.sharing case")
-      }
-    }
+  fileprivate func _handle(_ code: QQApiSendResultCode) -> SocialError? {
+    let error: SocialError?
 
     switch code {
+    case EQQAPISENDSUCESS:
+      error = nil
+
       // QQ app not available
     case EQQAPIQQNOTINSTALLED, EQQAPIQQNOTSUPPORTAPI:
       error = .app(reason: "QQ app is not installed or not updated")
@@ -40,19 +38,19 @@ extension QQ {
       // SocialKit error
     case EQQAPIAPPNOTREGISTED:
       error = .api(reason: """
-        App key is not registered to QQ SDK, need to call `SocialPlatforms.load([.qq(appKey: ...), ...]) in \
+        app ID is not registered to QQ SDK, need to call `SocialPlatforms.load([.qq(appID: <Your appID>), ...]) in \
         `AppDelegate.application(_:didFinishLaunchingWithOptions:launchOptions:)`
       """)
     case EQQAPISHAREDESTUNKNOWN:
       error = .api(reason: "`QQApiObject.shareDestType` is not given a valid target value")
     case EQQAPIMESSAGETYPEINVALID:
-      error = .api(reason: "Invalid message type")
+      error = .api(reason: "invalid message type")
     case EQQAPIMESSAGECONTENTNULL:
-      error = .api(reason: "Empty message content")
+      error = .api(reason: "empty message content")
     case EQQAPIMESSAGECONTENTINVALID:
-      error = .api(reason: "Incorrect message content")
+      error = .api(reason: "incorrect message content")
     case EQQAPIMESSAGEARKCONTENTNULL:
-      error = .api(reason: "Empty message ARK content")
+      error = .api(reason: "empty message ARK content")
     case EQQAPIQZONENOTSUPPORTTEXT:
       error = .api(reason: "Qzone does not support `QQApiTextObject`, use `QQApiImageArrayForQZoneObject`")
     case EQQAPIQZONENOTSUPPORTIMAGE:
@@ -61,16 +59,19 @@ extension QQ {
       // Sharing through H5 interface
     case EQQAPIAPPSHAREASYNC:
       jack.verbose("Message is sent asynchronously, perhaps through H5 interface")
+      error = nil
 
       // Sending requests failed
     case EQQAPISENDFAILD:
-      error = .send(reason: "Sending request to QQ failed")
+      error = .send(reason: "sending request to QQ failed")
     case EQQAPITIMSENDFAILD:
-      error = .send(reason: "Sending request to TIM failed")
+      error = .send(reason: "sending request to TIM failed")
 
     default:
-      error = .other(reason: "Unhandled seding result code: \(code)")
+      error = .other(reason: "unhandled seding result code: \(code)")
     }
+    
+    return error
   }
 
   /// Base method of sharing, the more convenient `shareXXX` methods is prefered.
@@ -79,7 +80,12 @@ extension QQ {
   ///   - target: Sharing target.
   ///   - object: The message content object.
   ///   - block: completion block.
-  public func send(to target: SharingTarget = .qq, object: QQApiObject, completion block: SharingCompletion?) {
+  public func send(
+    to target: SharingTarget = .qq,
+    object: QQApiObject,
+    completion block: SharingCompletion?
+  ) {
+
     QQ.shared.begin(.sharing(completion: block))
 
     switch target {
@@ -96,7 +102,10 @@ extension QQ {
     }
 
     let request = SendMessageToQQReq(content: object)!
-    QQApiInterface.send(request)
+    let code = QQApiInterface.send(request)
+    let error = _handle(code)
+    
+    end(with: .sharing(error: error))
   }
 
   // MARK: - Share a Text Message
@@ -144,14 +153,14 @@ extension QQ {
   ///   - block: completion block.
   public static func share(
     to target: SharingTarget = .qq,
-    image data: Data,
+    image: Data,
     title: String,
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
     QQ.shared._share(
       to: target,
-      image: data,
+      image: image,
       title: title,
       description: description,
       completion: block
@@ -160,14 +169,14 @@ extension QQ {
 
   private func _share(
     to target: SharingTarget = .qq,
-    image data: Data,
+    image: Data,
     title: String,
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
     let object = QQApiImageObject(
-      data: data,
-      previewImageData: data,
+      data: image,
+      previewImageData: image,
       title: title,
       description: description
     )
@@ -184,15 +193,15 @@ extension QQ {
   ///
   /// - Parameters:
   ///   - target: Sharing target.
-  ///   - url: New address.
-  ///   - previewImage: Preview mage data, not bigger than __1M__.
+  ///   - url: Link address.
+  ///   - previewImage: Preview image data, not bigger than __1M__.
   ///   - title: title.
   ///   - description: description.
   ///   - block: completion block.
   public static func share(
     to target: SharingTarget = .qq,
     link url: URL,
-    previewImage data: Data,
+    previewImage: Data,
     title: String,
     description: String? = nil,
     completion block: SharingCompletion?
@@ -200,7 +209,7 @@ extension QQ {
     QQ.shared._share(
       to: target,
       link: url,
-      previewImage: data,
+      previewImage: previewImage,
       title: title,
       description: description,
       completion: block
@@ -210,7 +219,7 @@ extension QQ {
   private func _share(
     to target: SharingTarget = .qq,
     link url: URL,
-    previewImage data: Data,
+    previewImage: Data,
     title: String,
     description: String? = nil,
     completion block: SharingCompletion?
@@ -219,7 +228,7 @@ extension QQ {
       url: url,
       title: title,
       description: description,
-      previewImageData: data,
+      previewImageData: previewImage,
       targetContentType: QQApiURLTargetTypeNews
     )
     send(
@@ -235,12 +244,14 @@ extension QQ {
 extension QQ: QQApiInterfaceDelegate {
 
   public func onReq(_ baseReqeust: QQBaseReq!) {
-    jack.warn("This callback is currently unhandled, argument `response`: \(baseReqeust)")
+    jack.warn("This callback is currently unhandled, argument `baseRequest`: \(baseReqeust)")
   }
 
   public func onResp(_ baseResponse: QQBaseResp!) {
     switch baseResponse {
     case let response as SendMessageToQQResp:
+      jack.debug("response.result: \(response.result), TCOpenSDKErrorMsgSuccess: \(TCOpenSDKErrorMsgSuccess)")
+
       if let errorDescription = response.errorDescription {
         end(with: .sharing(error: SocialError.send(reason: errorDescription)))
       } else {

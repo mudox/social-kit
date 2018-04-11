@@ -5,13 +5,6 @@ fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
 
 public class QQ: SocialPlatformAgent {
 
-  public enum SharingTarget {
-    case qq
-    case tim
-    case qzone
-    case favorites
-  }
-
   public static let shared = QQ()
 
   private(set) var oauth: TencentOAuth!
@@ -20,11 +13,11 @@ public class QQ: SocialPlatformAgent {
 
   override private init() {
     super.init()
-    jack.info(platformInfo, from: .custom("QQ Platform Loaded"))
+    jack.info(_platformInfo, from: .custom("QQ Platform Loaded"))
   }
 
-  public static func initPlatform(appKey: String) {
-    let oauth = TencentOAuth(appId: appKey, andDelegate: QQ.shared)
+  public static func initPlatform(appID: String) {
+    let oauth = TencentOAuth(appId: appID, andDelegate: QQ.shared)
     QQ.shared.oauth = oauth
   }
 
@@ -42,7 +35,7 @@ public class QQ: SocialPlatformAgent {
 
   // MARK: Helpers
 
-  private var platformInfo: String {
+  private var _platformInfo: String {
     var version = "\(TencentOAuth.sdkVersion() ?? "unkown") - \(TencentOAuth.sdkSubVersion() ?? "unknown")"
     if TencentOAuth.isLiteSDK() {
       version += " (Lite)"
@@ -78,9 +71,9 @@ public class QQ: SocialPlatformAgent {
     }
 
     return """
-    SDK : \(version)
-     QQ : \(qq)
-    TIM : \(tim)
+      - SDK        :   \(version)
+      -  QQ        :   \(qq)
+      - TIM        :   \(tim)
     """
   }
 

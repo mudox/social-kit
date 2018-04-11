@@ -9,6 +9,9 @@ import Foundation
 
 public enum SocialError: Error, CustomStringConvertible {
 
+  /// Authorization failed.
+  case authorization
+  
   /// For example:
   /// - The QQ/TIM app is not installed.
   /// - The QQ/TIM need to be updated to support current SDK.
@@ -59,6 +62,8 @@ public enum SocialError: Error, CustomStringConvertible {
 
   public var description: String {
     switch self {
+    case .authorization:
+      return "Authorization failed"
     case .app(let reason):
       return "Platform client app unavailable, reason: \(reason ?? "reason unknown")"
     case .sdk(let reason):

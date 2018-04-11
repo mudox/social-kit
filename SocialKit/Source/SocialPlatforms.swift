@@ -6,13 +6,11 @@ fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 public class SocialPlatforms {
 
   public enum LoadingInfo: Hashable, CustomStringConvertible {
-    // Sina
-    case weibo(appKey: String)
-    // Tencent
-    case qq(appKey: String)
-    case weChat(appKey: String)
-    // Alibaba
-    case aliPay(appKey: String)
+    
+    case weibo(appID: String)
+    case qq(appID: String)
+    case weChat(appID: String)
+    case aliPay(appID: String)
 
     public func open(_ url: URL) -> Bool {
       switch self {
@@ -23,7 +21,7 @@ public class SocialPlatforms {
       case .qq:
         return QQ.open(url)
       case .weChat:
-        fatalError("Unimplemented")
+        return WeChat.open(url)
       }
     }
 
@@ -44,14 +42,16 @@ public class SocialPlatforms {
 
     _platforms.forEach { info in
       switch info {
-      case .qq(let appKey):
-        QQ.initPlatform(appKey: appKey)
-      case .weChat(let appKey):
-        WeChat.initPlatform(appKey: appKey)
-      case .weibo(let appKey):
-        Weibo.initPlatform(appKey: appKey)
-      case .aliPay(let appKey):
-        AliPay.initPlatform(appKey: appKey)
+      case .qq(let appID):
+        QQ.initPlatform(appID: appID)
+      case .weChat(let appID):
+        WeChat.initPlatform(appID: appID)
+      case .weibo(let appID):
+        fatalError("Unimplemented")
+//        Weibo.initPlatform(appID: appID)
+      case .aliPay(let appID):
+        fatalError("Unimplemented")
+//        AliPay.initPlatform(appID: appID)
       }
     }
 
