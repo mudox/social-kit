@@ -10,6 +10,28 @@ extension WeChat {
     case timeline
     case favorites
   }
+  
+  func _checkImageSizeNotExceeds10M(_ data: Data, completion block: SharingCompletion?) -> Bool {
+    if data.count > 10 * 1024 * 1024 {
+      let error = SocialError.api(reason: "Image data size (\(data.count)) exceeds 10M")
+      begin(.sharing(completion: block))
+      end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
+      return false
+    } else {
+      return true
+    }
+  }
+  
+  func _checkPreviewImageSizeNotExceeds32K(_ data: Data?, completion block: SharingCompletion?) -> Bool {
+    if let data = data, data.count > 32 * 1024 {
+      let error = SocialError.api(reason: "Preview image size (\(data.count)) exceeds 32K")
+      begin(.sharing(completion: block))
+      end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
+      return false
+    } else {
+      return true
+    }
+  }
 
   /// Base method of sharing, the more convenient `shareXXX` methods is prefered.
   ///
@@ -22,9 +44,7 @@ extension WeChat {
     request: SendMessageToWXReq,
     completion block: SharingCompletion?
   ) {
-    var error: SocialError? = nil
     WeChat.shared.begin(.sharing(completion: block))
-    
 
     switch target {
     case .session:
@@ -35,11 +55,24 @@ extension WeChat {
       request.scene = Int32(WXSceneFavorite.rawValue)
     }
 
-    if !WXApi.send(request) {
-      error = SocialError.send(reason: "calling `WXApi.send` method returned false")
+    let success = WXApi.send(request)
+    if !success {
+      let error = SocialError.send(reason: """
+        Calling `WXApi.send` method returned false, possible reason:
+          - Image data size exceeds 10M
+          - Preview image data size exceeds 32K
+        """)
+      end(with: .sharing(error: error))
+    } else {
+      // Caution:
+      //   As of v1.8.2, when user deny to open WeChat app, `WXapi.send` call
+      //   return true immediately.
+      jack.verbose("""
+        Calling `WApi.send` method returned true. As of WeChatSDK v1.8.2, \
+        when user denied to open WeChat app, the method just return true, with \
+        the completion block being uncleaned.
+        """)
     }
-    
-    end(with: .sharing(error: error))
   }
 
   // MARK: - Share a Text Message
@@ -84,7 +117,8 @@ extension WeChat {
   ///
   /// - Parameters:
   ///   - target: Sharing target.
-  ///   - imageData: Image data, not bigger than __5M__.
+  ///   - imageData: Image data size should not exceeds __10M__.
+  ///   - previewImage: Preview mage data size should not exceeds __32K__.
   ///   - title: title.
   ///   - description: description.
   ///   - block: completion block.
@@ -114,6 +148,9 @@ extension WeChat {
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
+    guard _checkImageSizeNotExceeds10M(image, completion: block) else { return }
+    guard _checkPreviewImageSizeNotExceeds32K(previewImage, completion: block) else { return }
+
     let imageObject = WXImageObject()
     imageObject.imageData = image
 
@@ -126,7 +163,7 @@ extension WeChat {
     let request = SendMessageToWXReq()
     request.bText = false
     request.message = message
-    
+
     send(
       to: target,
       request: request,
@@ -148,7 +185,7 @@ extension WeChat {
   public static func share(
     to target: SharingTarget = .session,
     link url: URL,
-    previewImage data: Data,
+    previewImage: Data,
     title: String,
     description: String? = nil,
     completion block: SharingCompletion?
@@ -156,7 +193,7 @@ extension WeChat {
     WeChat.shared._share(
       to: target,
       link: url,
-      previewImage: data,
+      previewImage: previewImage,
       title: title,
       description: description,
       completion: block
@@ -171,19 +208,21 @@ extension WeChat {
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
+    guard _checkPreviewImageSizeNotExceeds32K(previewImage, completion: block) else { return }
+
     let linkObject = WXWebpageObject()
     linkObject.webpageUrl = url.absoluteString
-    
+
     let message = WXMediaMessage()
     message.title = title
     message.description = description
     message.thumbData = previewImage
     message.mediaObject = linkObject
-    
+
     let request = SendMessageToWXReq()
     request.bText = false
     request.message = message
-    
+
     send(
       to: target,
       request: request,

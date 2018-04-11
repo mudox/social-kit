@@ -37,7 +37,7 @@ public class SocialPlatformAgent: NSObject {
 
   func begin(_ newTask: Task) {
     if task != nil {
-      jack.warn("Uncleaned agent task: \(task!)")
+      jack.warn("Previous task unclean")
     }
 
     task = newTask

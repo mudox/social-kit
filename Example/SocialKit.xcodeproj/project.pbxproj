@@ -17,6 +17,9 @@
 		F423981A207D1D070041BEC0 /* QQLoginResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239819207D1D070041BEC0 /* QQLoginResultView.swift */; };
 		F423981C207D1D270041BEC0 /* QQLoginResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F423981B207D1D270041BEC0 /* QQLoginResultView.xib */; };
 		F423981E207D3DC80041BEC0 /* EurekaFormStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423981D207D3DC80041BEC0 /* EurekaFormStyle.swift */; };
+		F4239826207E10520041BEC0 /* WeiboVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239823207E10510041BEC0 /* WeiboVC.swift */; };
+		F4239827207E10520041BEC0 /* QQVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239824207E10510041BEC0 /* QQVC.swift */; };
+		F4239828207E10520041BEC0 /* WeChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239825207E10520041BEC0 /* WeChatVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 		F4239819207D1D070041BEC0 /* QQLoginResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QQLoginResultView.swift; sourceTree = "<group>"; };
 		F423981B207D1D270041BEC0 /* QQLoginResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QQLoginResultView.xib; sourceTree = "<group>"; };
 		F423981D207D3DC80041BEC0 /* EurekaFormStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EurekaFormStyle.swift; sourceTree = "<group>"; };
+		F4239823207E10510041BEC0 /* WeiboVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeiboVC.swift; sourceTree = "<group>"; };
+		F4239824207E10510041BEC0 /* QQVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QQVC.swift; sourceTree = "<group>"; };
+		F4239825207E10520041BEC0 /* WeChatVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeChatVC.swift; sourceTree = "<group>"; };
 		F4A8484E2078B49000C0DA11 /* Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Tests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -128,6 +134,9 @@
 				F423981B207D1D270041BEC0 /* QQLoginResultView.xib */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* MainVC.swift */,
+				F4239824207E10510041BEC0 /* QQVC.swift */,
+				F4239825207E10520041BEC0 /* WeChatVC.swift */,
+				F4239823207E10510041BEC0 /* WeiboVC.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
@@ -356,8 +365,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F423981A207D1D070041BEC0 /* QQLoginResultView.swift in Sources */,
+				F4239826207E10520041BEC0 /* WeiboVC.swift in Sources */,
+				F4239827207E10520041BEC0 /* QQVC.swift in Sources */,
 				607FACD81AFB9204008FA782 /* MainVC.swift in Sources */,
 				F423981E207D3DC80041BEC0 /* EurekaFormStyle.swift in Sources */,
+				F4239828207E10520041BEC0 /* WeChatVC.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

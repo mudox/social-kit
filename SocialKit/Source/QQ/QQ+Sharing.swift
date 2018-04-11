@@ -70,9 +70,32 @@ extension QQ {
     default:
       error = .other(reason: "unhandled seding result code: \(code)")
     }
-    
+
     return error
   }
+
+  func _checkImageSizeNotExceeds5M(_ data: Data, completion block: SharingCompletion?) -> Bool {
+    if data.count > 5 * 1024 * 1024 {
+      let error = SocialError.api(reason: "Image data size (\(data.count)) exceeds 5M")
+      begin(.sharing(completion: block))
+      end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
+      return false
+    } else {
+      return true
+    }
+  }
+
+  func _checkPreviewImageSizeNotExceeds1M(_ data: Data?, completion block: SharingCompletion?) -> Bool {
+    if let data = data, data.count > 1 * 1024 * 1024 {
+      let error = SocialError.api(reason: "Preview image size (\(data.count)) exceeds 1M")
+      begin(.sharing(completion: block))
+      end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
+      return false
+    } else {
+      return true
+    }
+  }
+
 
   /// Base method of sharing, the more convenient `shareXXX` methods is prefered.
   ///
@@ -85,7 +108,6 @@ extension QQ {
     object: QQApiObject,
     completion block: SharingCompletion?
   ) {
-
     QQ.shared.begin(.sharing(completion: block))
 
     switch target {
@@ -104,7 +126,7 @@ extension QQ {
     let request = SendMessageToQQReq(content: object)!
     let code = QQApiInterface.send(request)
     let error = _handle(code)
-    
+
     end(with: .sharing(error: error))
   }
 
@@ -147,13 +169,15 @@ extension QQ {
   ///
   /// - Parameters:
   ///   - target: Sharing target.
-  ///   - imageData: Image data, not bigger than __5M__.
+  ///   - imageData: Image data size should not exceeeds __5M__.
+  ///   - previewImage: Preview mage data size should not exceeeds __1M__.
   ///   - title: title.
   ///   - description: description.
   ///   - block: completion block.
   public static func share(
     to target: SharingTarget = .qq,
     image: Data,
+    previewImage: Data? = nil,
     title: String,
     description: String? = nil,
     completion block: SharingCompletion?
@@ -161,6 +185,7 @@ extension QQ {
     QQ.shared._share(
       to: target,
       image: image,
+      previewImage: previewImage,
       title: title,
       description: description,
       completion: block
@@ -170,13 +195,24 @@ extension QQ {
   private func _share(
     to target: SharingTarget = .qq,
     image: Data,
+    previewImage: Data? = nil,
     title: String,
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
+    guard _checkImageSizeNotExceeds5M(image, completion: block) else { return }
+    guard _checkPreviewImageSizeNotExceeds1M(previewImage, completion: block) else { return }
+
+    if let data = previewImage, data.count > 1 * 1024 * 1024 {
+      let error = SocialError.api(reason: "Preview image size (\(data.count)) exceeds 1M")
+      begin(.sharing(completion: block))
+      end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
+      return
+    }
+
     let object = QQApiImageObject(
       data: image,
-      previewImageData: image,
+      previewImageData: previewImage,
       title: title,
       description: description
     )
@@ -194,7 +230,7 @@ extension QQ {
   /// - Parameters:
   ///   - target: Sharing target.
   ///   - url: Link address.
-  ///   - previewImage: Preview image data, not bigger than __1M__.
+  ///   - previewImage: Preview mage data size should not exceeeds __1M__.
   ///   - title: title.
   ///   - description: description.
   ///   - block: completion block.
@@ -224,6 +260,8 @@ extension QQ {
     description: String? = nil,
     completion block: SharingCompletion?
   ) {
+    guard _checkPreviewImageSizeNotExceeds1M(previewImage, completion: block) else { return }
+
     let object = QQApiNewsObject(
       url: url,
       title: title,
