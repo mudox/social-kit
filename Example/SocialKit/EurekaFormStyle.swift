@@ -29,7 +29,11 @@ func setupEurekaFormStyle() {
     setField(cell.textField!)
   }
   
-  PickerInlineRow<QQ.SharingTarget>.defaultCellUpdate = { cell, row in
-    setLabel(cell.detailTextLabel!)
-  }
+//  PickerInlineRow<QQ.SharingTarget>.defaultCellUpdate = { cell, row in
+//    setLabel(cell.detailTextLabel!)
+//  }
+//  
+//  PickerInlineRow<WeChat.SharingTarget>.defaultCellUpdate = { cell, row in
+//    setLabel(cell.detailTextLabel!)
+//  }
 }

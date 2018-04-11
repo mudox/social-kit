@@ -1,11 +1,3 @@
-//
-//  AppDelegate.swift
-//  SocialKit
-//
-//  Created by mudox on 11/13/2017.
-//  Copyright (c) 2017 mudox. All rights reserved.
-//
-
 import UIKit
 
 import SocialKit
@@ -31,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ])
 
     window = UIWindow(frame: UIScreen.main.bounds)
-    window?.rootViewController = MainVC()
+    window?.rootViewController = UINavigationController(rootViewController: MainVC())
     window?.makeKeyAndVisible()
 
     return true
