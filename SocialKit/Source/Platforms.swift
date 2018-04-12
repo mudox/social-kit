@@ -7,7 +7,7 @@ public class Platforms {
 
   public enum LoadingInfo: Hashable, CustomStringConvertible {
     
-    case weibo(appKey: String)
+    case weibo(appID: String)
     case qq(appID: String)
     case weChat(appID: String)
     case aliPay(appID: String)
@@ -46,8 +46,8 @@ public class Platforms {
         QQ.initPlatform(appID: appID)
       case .weChat(let appID):
         WeChat.initPlatform(appID: appID)
-      case .weibo(let appKey):
-        Weibo.initPlatform(appKey: appKey)
+      case .weibo(let appID):
+        Weibo.initPlatform(appID: appID)
       case .aliPay(let appID):
         fatalError("Unimplemented")
       }

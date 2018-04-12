@@ -7,8 +7,6 @@ public class Weibo: BasePlatformAgent {
 
   public static let shared = Weibo()
 
-  private(set) var oauth: TencentOAuth!
-
   // MARK: Platform init
 
   override private init() {
@@ -16,20 +14,24 @@ public class Weibo: BasePlatformAgent {
     jack.info(platformInfo, from: .custom("Weibo Platform Loaded"))
   }
 
-  public static func initPlatform(appKey: String) {
-    WeiboSDK.registerApp(appKey)
+  public static func initPlatform(appID: String) {
+    #if DEBUG
+      WeiboSDK.enableDebugMode(true)
+    #endif
+
+    WeiboSDK.registerApp(appID)
     _ = shared // force share instance initizliation
   }
 
 }
 
 extension Weibo: PlatformAgentType {
-  
+
   public enum SharingTarget {
     case timeline
     case story
   }
-  
+
   public var platformInfo: String {
     let version = "\(WeiboSDK.getVersion() ?? "unkown")"
 
