@@ -19,7 +19,7 @@ public class BaseLoginResult {
 
 
 /// Base class for concrete social platform agent classes
-public class SocialPlatformAgent: NSObject {
+public class BasePlatformAgent: NSObject {
 
   // MARK: - Manage Task
 
@@ -28,7 +28,7 @@ public class SocialPlatformAgent: NSObject {
     case login(completion: LoginCompletion?)
   }
 
-  private(set) var task: Task?
+  private var _task: Task?
 
   enum TaskResult {
     case sharing(error: Error?)
@@ -36,15 +36,15 @@ public class SocialPlatformAgent: NSObject {
   }
 
   func begin(_ newTask: Task) {
-    if task != nil {
+    if _task != nil {
       jack.warn("Previous task unclean")
     }
 
-    task = newTask
+    _task = newTask
   }
 
   func end(with result: TaskResult) {
-    defer { task = nil }
+    defer { _task = nil }
 
     switch result {
     case let .sharing(error: error):
@@ -92,7 +92,7 @@ public class SocialPlatformAgent: NSObject {
 
 
   private var _sharingCompletion: SharingCompletion {
-    guard let task = self.task else {
+    guard let task = _task else {
       jack.assertFailure("Current task is nil")
       return _defaultSharingCompletion
     }
@@ -106,7 +106,7 @@ public class SocialPlatformAgent: NSObject {
   }
 
   private var _loginCompletion: LoginCompletion {
-    guard let task = self.task else {
+    guard let task = _task else {
       jack.assertFailure("Current task is nil")
       return _defaultLoginCompletion
     }
@@ -118,4 +118,18 @@ public class SocialPlatformAgent: NSObject {
       return _defaultLoginCompletion
     }
   }
+}
+
+public protocol PlatformAgentType {
+  
+  associatedtype SharingTarget
+
+  var platformInfo: String { get }
+  
+  static func open(_ url: URL) -> Bool
+
+  var canLogin: Bool { get }
+
+  var canShare: Bool { get }
+
 }
