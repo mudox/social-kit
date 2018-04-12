@@ -2,7 +2,7 @@ import UIKit
 import SocialKit
 import iOSKit
 
-class QQLoginResultView: UIView {
+class LoginResultView: UIView {
 
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -36,7 +36,7 @@ class QQLoginResultView: UIView {
     
 
     nicknameLabel.text = userInfo.nickname ?? "N/A"
-    cityLabel.text = userInfo.city ?? "N/A"
+    cityLabel.text = userInfo.location ?? "N/A"
     genderLabel.text = userInfo.gender == .male ? "Male" : "Female"
     avatarView.kf.setImage(with: userInfo.avatarURL)
   }

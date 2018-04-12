@@ -26,6 +26,6 @@ extension WeChat: WXApiDelegate {
   }
   
   public func onReq(_ baseRequest: BaseReq!) {
-    jack.warn("This callback is currently unhandled, argument `baseRequest`: \(baseRequest)")
+    jack.assertFailure("This callback is currently unhandled, argument `baseRequest`: \(baseRequest)")
   }
 }

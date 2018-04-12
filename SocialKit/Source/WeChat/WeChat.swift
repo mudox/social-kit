@@ -17,17 +17,17 @@ public class WeChat: BasePlatformAgent {
   }
 
   public static func initPlatform(appID: String) {
+    #if DEDUG
+    WXApi.startLog(by: .detail) { log in
+      jack.debug(log, from: .custom("WXApi"))
+    }
+    #endif
+    
     guard WXApi.registerApp(appID) else {
       jack.error("WXApi.registerApp(...) returned false, WeChat SDK initialization failed.")
       return
     }
 
-    #if DEDUG
-      WXApi.startLog(by: .detail) { log in
-        jack.debug(log, from: .custom("WXApi"))
-      }
-    #endif
-    
     _ = shared // force share instance initizliation
   }
 

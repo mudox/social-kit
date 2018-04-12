@@ -8,19 +8,9 @@ fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 extension QQ: TencentSessionDelegate {
 
   public func tencentDidLogin() {
-    guard let token = oauth.accessToken, !token.isEmpty,
-      let openID = oauth.openId, !openID.isEmpty,
-      let date = oauth.expirationDate, date > Date()
-      else {
-        let reason = TencentOAuth.getLastErrorMsg()
-        let error = SocialError.api(reason: """
-          invalid credential data. May be:
-            - nil access token, open ID, expiration date.
-            - expiration date already expired.
-          TencenOAuth.getLastErrorMsg: \(reason ?? "nil")
-          """)
-        end(with: .login(result: nil, error: error))
-        return
+    if let error = validate(accessToken: oauth.accessToken, openID: oauth.openId, expirationDate: oauth.expirationDate) {
+      end(with: .login(result: nil, error: error))
+      return
     }
 
     // next step
@@ -28,7 +18,7 @@ extension QQ: TencentSessionDelegate {
   }
 
   public func tencentDidNotLogin(_ cancelled: Bool) {
-    var error: Error
+    var error: SocialError
     if cancelled {
       error = SocialError.canceled(reason: "canceled by user")
     } else {
@@ -38,7 +28,6 @@ extension QQ: TencentSessionDelegate {
         """)
     }
     end(with: .login(result: nil, error: error))
-
   }
 
   public func tencentDidNotNetWork() {
@@ -51,14 +40,31 @@ extension QQ: TencentSessionDelegate {
   }
 
   public func getUserInfoResponse(_ response: APIResponse!) {
-    do {
-      let result = try QQLoginResult(response: response, oauth: oauth)
-      end(with: .login(result: result, error: nil))
-    } catch {
-      end(with: .login(result: nil, error: error))
+
+    guard response.retCode == URLREQUEST_SUCCEED.rawValue else {
+      end(with: .login(result: nil, error: .api(reason: "`response.retCode` != `URLREQUEST_SUCCEED.rawValue`")))
+      return
     }
+
+    guard let json = response.jsonResponse as? [String: Any] else {
+      end(with: .login(result: nil, error: .api(reason: "fail to cast response.jsonResponse to `[String: Any]`")))
+      return
+    }
+
+    if let error = validate(accessToken: oauth.accessToken, openID: oauth.openId, expirationDate: oauth.expirationDate) {
+      end(with: .login(result: nil, error: error))
+      return
+    }
+
+    let result = QQLoginResult(
+      accessToken: oauth.accessToken,
+      openID: oauth.openId,
+      expirationDate: oauth.expirationDate,
+      userInfo: json
+    )
+    end(with: .login(result: result, error: nil))
   }
-  
+
 }
 
 // MARK: - QQApiInterfaceDelegate
