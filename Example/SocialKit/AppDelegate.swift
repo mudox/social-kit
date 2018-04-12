@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Platforms.load([
         .qq(appID: "1106041023"),
         .weChat(appID: "wx38c88a78775189e6"),
-        .weibo(appKey: "1736974603"),
+        .weibo(appID: "1736974603"),
     ])
 
     window = UIWindow(frame: UIScreen.main.bounds)

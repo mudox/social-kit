@@ -17,8 +17,8 @@ import JacKit
 fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 
 class WeiboVC: FormViewController {
-  
-  var loginResultView: QQLoginResultView!
+
+  var loginResultView: LoginResultView!
 
   var titleInput: String? {
     return self.form.values()["title"] as? String
@@ -54,11 +54,11 @@ class WeiboVC: FormViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     navigationItem.title = "Weibo"
 
-    let nib = UINib(nibName: "QQLoginResultView", bundle: nil)
-    let view = nib.instantiate(withOwner: nil, options: nil).first as! QQLoginResultView
+    let nib = UINib(nibName: "LoginResultView", bundle: nil)
+    let view = nib.instantiate(withOwner: nil, options: nil).first as! LoginResultView
     tableView.tableHeaderView = view
     loginResultView = view
 
@@ -69,23 +69,25 @@ class WeiboVC: FormViewController {
     <<< ButtonRow() {
       $0.title = "Login"
     }.onCellSelection { cell, row in
-      QQ.login { [weak self] baseResult, error in
-        guard let ss = self else { return }
-        
-        guard let baseResult = baseResult else {
-          jack.error("Failed to login QQ: \(error!)")
-          ss.view.mbp.execute(.failure(title: "登录失败"))
-          return
-        }
+      Weibo.login { baseResult, error in
+        DispatchQueue.main.async { [weak self] in
+          guard let ss = self else { return }
 
-        guard let result = baseResult as? QQLoginResult else {
-          jack.error("Can not cast LoginResult instance to QQLoginResult")
-          ss.view.mbp.execute(.failure(title: "登录失败"))
-          return
+          guard let baseResult = baseResult else {
+            jack.error("Failed to login QQ: \(error!)")
+            ss.view.mbp.execute(.failure(title: "登录失败"))
+            return
+          }
+
+          guard let result = baseResult as? WeiboLoginResult else {
+            jack.error("Can not cast BaseLoginResult instance to WeiboLoginResult")
+            ss.view.mbp.execute(.failure(title: "登录失败"))
+            return
+          }
+
+          ss.view.mbp.execute(.success(title: "登录成功"))
+          ss.loginResultView.set(with: result)
         }
-        
-        ss.view.mbp.execute(.success(title: "登录成功"))
-        ss.loginResultView.set(with: result)
       }
     }
 

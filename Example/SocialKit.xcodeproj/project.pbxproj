@@ -12,11 +12,10 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
-		ABBF42763CC8726D7F2AEAAC /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4BA5600B60ECF57BE0073C81 /* Pods_Tests.framework */; };
 		CCE0F1EDB3D3FA4DB41206FD /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0EBC9257A8ABB8C5ED3FC03 /* Pods_Demo.framework */; };
 		F405E91A207EE76100DD7AE7 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F405E919207EE76100DD7AE7 /* WeiboSDK.bundle */; };
-		F423981A207D1D070041BEC0 /* QQLoginResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239819207D1D070041BEC0 /* QQLoginResultView.swift */; };
-		F423981C207D1D270041BEC0 /* QQLoginResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F423981B207D1D270041BEC0 /* QQLoginResultView.xib */; };
+		F423981A207D1D070041BEC0 /* LoginResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239819207D1D070041BEC0 /* LoginResultView.swift */; };
+		F423981C207D1D270041BEC0 /* LoginResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F423981B207D1D270041BEC0 /* LoginResultView.xib */; };
 		F423981E207D3DC80041BEC0 /* EurekaFormStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F423981D207D3DC80041BEC0 /* EurekaFormStyle.swift */; };
 		F4239826207E10520041BEC0 /* WeiboVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239823207E10510041BEC0 /* WeiboVC.swift */; };
 		F4239827207E10520041BEC0 /* QQVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239824207E10510041BEC0 /* QQVC.swift */; };
@@ -34,8 +33,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		43E8959D018BBB232891AB19 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
-		4BA5600B60ECF57BE0073C81 /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,7 +42,6 @@
 		607FACDF1AFB9204008FA782 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		607FACEA1AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
-		8BA648C1368EAD8B588ECAFE /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		99B82394FABEDB2D3AEE506B /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		B28A6D0E42156D7115DB40CD /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
 		C0EBC9257A8ABB8C5ED3FC03 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -54,10 +50,9 @@
 		CACF9DB1B2217EC7C3D63282 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		D1F9F2B4588E63C57017D735 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6143785D5B90451D120C3B5 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
-		E2AB3809EBDFCE67F4A63B5A /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
 		F405E919207EE76100DD7AE7 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = WeiboSDK.bundle; path = ../SocialKit/Library/Weibo/v.3.2.3/WeiboSDK.bundle; sourceTree = "<group>"; };
-		F4239819207D1D070041BEC0 /* QQLoginResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QQLoginResultView.swift; sourceTree = "<group>"; };
-		F423981B207D1D270041BEC0 /* QQLoginResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QQLoginResultView.xib; sourceTree = "<group>"; };
+		F4239819207D1D070041BEC0 /* LoginResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResultView.swift; sourceTree = "<group>"; };
+		F423981B207D1D270041BEC0 /* LoginResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginResultView.xib; sourceTree = "<group>"; };
 		F423981D207D3DC80041BEC0 /* EurekaFormStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EurekaFormStyle.swift; sourceTree = "<group>"; };
 		F4239823207E10510041BEC0 /* WeiboVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeiboVC.swift; sourceTree = "<group>"; };
 		F4239824207E10510041BEC0 /* QQVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QQVC.swift; sourceTree = "<group>"; };
@@ -78,7 +73,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				ABBF42763CC8726D7F2AEAAC /* Pods_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,8 +82,6 @@
 		17D455DDCC46F5629F7BAD31 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				43E8959D018BBB232891AB19 /* Pods-Example.debug.xcconfig */,
-				E2AB3809EBDFCE67F4A63B5A /* Pods-Example.release.xcconfig */,
 				D1F9F2B4588E63C57017D735 /* Pods-Tests.debug.xcconfig */,
 				D6143785D5B90451D120C3B5 /* Pods-Tests.release.xcconfig */,
 				B28A6D0E42156D7115DB40CD /* Pods-Demo.debug.xcconfig */,
@@ -101,8 +93,6 @@
 		5414ED9198C78292F98A68BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				8BA648C1368EAD8B588ECAFE /* Pods_Example.framework */,
-				4BA5600B60ECF57BE0073C81 /* Pods_Tests.framework */,
 				C0EBC9257A8ABB8C5ED3FC03 /* Pods_Demo.framework */,
 			);
 			name = Frameworks;
@@ -133,8 +123,8 @@
 		607FACD21AFB9204008FA782 /* Demo */ = {
 			isa = PBXGroup;
 			children = (
-				F4239819207D1D070041BEC0 /* QQLoginResultView.swift */,
-				F423981B207D1D270041BEC0 /* QQLoginResultView.xib */,
+				F4239819207D1D070041BEC0 /* LoginResultView.swift */,
+				F423981B207D1D270041BEC0 /* LoginResultView.xib */,
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* MainVC.swift */,
 				F4239824207E10510041BEC0 /* QQVC.swift */,
@@ -277,7 +267,7 @@
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
-				F423981C207D1D270041BEC0 /* QQLoginResultView.xib in Resources */,
+				F423981C207D1D270041BEC0 /* LoginResultView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -368,7 +358,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F423981A207D1D070041BEC0 /* QQLoginResultView.swift in Sources */,
+				F423981A207D1D070041BEC0 /* LoginResultView.swift in Sources */,
 				F4239826207E10520041BEC0 /* WeiboVC.swift in Sources */,
 				F4239827207E10520041BEC0 /* QQVC.swift in Sources */,
 				607FACD81AFB9204008FA782 /* MainVC.swift in Sources */,

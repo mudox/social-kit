@@ -11,6 +11,37 @@ class LoginResultView: UIView {
 
     contentView.isHidden = true
   }
+  
+  func set(with userInfo: WeiboLoginResult) {
+    tipLabel.isHidden = true
+    contentView.isHidden = false
+    
+    accessTokenLabel.text = userInfo.accessToken
+    openIDLabel.text = userInfo.openID
+    
+    let dateText = with(DateFormatter()) { fmt -> String in
+      fmt.timeZone = TimeZone.current
+      fmt.dateStyle = .short
+      fmt.timeStyle = .short
+      return fmt.string(from: userInfo.expirationDate)
+    }
+    
+    let intervalText = with(DateComponentsFormatter()) { fmt -> String in
+      fmt.unitsStyle = .abbreviated
+      
+      fmt.includesTimeRemainingPhrase = true
+      fmt.allowedUnits = [.day]
+      return  fmt.string(from: userInfo.expirationDate.timeIntervalSince(Date())) ?? ""
+    }
+    
+    expirationDateLabel.text = "\(dateText) (剩余 \(intervalText))"
+    
+    
+    nicknameLabel.text = userInfo.nickname ?? "N/A"
+    cityLabel.text = userInfo.location ?? "N/A"
+    genderLabel.text = userInfo.gender == .male ? "Male" : "Female"
+    avatarView.kf.setImage(with: userInfo.avatarURL)
+  }
 
   func set(with userInfo: QQLoginResult) {
     tipLabel.isHidden = true

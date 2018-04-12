@@ -18,7 +18,7 @@ fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 
 class QQVC: FormViewController {
 
-  var loginResultView: QQLoginResultView!
+  var loginResultView: LoginResultView!
 
   var titleInput: String? {
     return self.form.values()["title"] as? String
@@ -36,12 +36,12 @@ class QQVC: FormViewController {
     let image = #imageLiteral(resourceName: "imageToShare")
     return UIImagePNGRepresentation(image)!
   }
-  
+
   var previewImage: Data {
     let image = #imageLiteral(resourceName: "previewImageToShare")
     return UIImagePNGRepresentation(image)!
   }
-  
+
 
   let url = URL(string: "https://github.com/mudox")!
 
@@ -63,8 +63,8 @@ class QQVC: FormViewController {
 
     navigationItem.title = "QQ"
 
-    let nib = UINib(nibName: "QQLoginResultView", bundle: nil)
-    let view = nib.instantiate(withOwner: nil, options: nil).first as! QQLoginResultView
+    let nib = UINib(nibName: "LoginResultView", bundle: nil)
+    let view = nib.instantiate(withOwner: nil, options: nil).first as! LoginResultView
     tableView.tableHeaderView = view
     loginResultView = view
 
@@ -75,23 +75,25 @@ class QQVC: FormViewController {
     <<< ButtonRow() {
       $0.title = "Login"
     }.onCellSelection { cell, row in
-      QQ.login { [weak self] baseResult, error in
-        guard let ss = self else { return }
+      QQ.login { baseResult, error in
+        DispatchQueue.main.async { [weak self] in
+          guard let ss = self else { return }
 
-        guard let baseResult = baseResult else {
-          jack.error("Failed to login QQ: \(error!)")
-          ss.view.mbp.execute(.failure(title: "登录失败"))
-          return
+          guard let baseResult = baseResult else {
+            jack.error("Failed to login QQ: \(error!)")
+            ss.view.mbp.execute(.failure(title: "登录失败"))
+            return
+          }
+
+          guard let result = baseResult as? QQLoginResult else {
+            jack.error("Can not cast LoginResult instance to QQLoginResult")
+            ss.view.mbp.execute(.failure(title: "登录失败"))
+            return
+          }
+
+          ss.view.mbp.execute(.success(title: "登录成功"))
+          ss.loginResultView.set(with: result)
         }
-
-        guard let result = baseResult as? QQLoginResult else {
-          jack.error("Can not cast LoginResult instance to QQLoginResult")
-          ss.view.mbp.execute(.failure(title: "登录失败"))
-          return
-        }
-
-        ss.view.mbp.execute(.success(title: "登录成功"))
-        ss.loginResultView.set(with: result)
       }
     }
 

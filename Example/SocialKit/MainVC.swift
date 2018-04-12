@@ -41,9 +41,6 @@ class MainVC: FormViewController {
     <<< ButtonRow() {
       $0.title = "Weibo"
       $0.presentationMode = .show(controllerProvider: .callback(builder: WeiboVC.init), onDismiss: nil)
-      $0.disabled = true
-    }.cellSetup { cell, row in
-      cell.textLabel?.textColor = .lightGray
     }
   }
 

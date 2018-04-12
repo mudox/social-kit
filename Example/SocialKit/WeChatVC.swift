@@ -18,7 +18,7 @@ fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 
 class WeChatVC: FormViewController {
 
-  var loginResultView: QQLoginResultView!
+  var loginResultView: LoginResultView!
 
   var titleInput: String? {
     return self.form.values()["title"] as? String
@@ -63,7 +63,7 @@ class WeChatVC: FormViewController {
     navigationItem.title = "WeChat"
 
     let nib = UINib(nibName: "QQLoginResultView", bundle: nil)
-    let view = nib.instantiate(withOwner: nil, options: nil).first as! QQLoginResultView
+    let view = nib.instantiate(withOwner: nil, options: nil).first as! LoginResultView
     tableView.tableHeaderView = view
     loginResultView = view
 
@@ -77,24 +77,27 @@ class WeChatVC: FormViewController {
     }.cellSetup { cell, row in
       cell.textLabel?.textColor = .lightGray
     }.onCellSelection { cell, row in
-//      WeChat.login { [weak self] baseResult, error in
-//        guard let ss = self else { return }
-//
-//        guard let baseResult = baseResult else {
-//          jack.error("Failed to login WeChat: \(error!)")
-//          ss.view.mbp.execute(.failure(title: "登录失败"))
-//          return
-//        }
-//
-//        guard let result = baseResult as? WeChatLoginResult else {
-//          jack.error("Can not cast LoginResult instance to WeChatLoginResult")
-//          ss.view.mbp.execute(.failure(title: "登录失败"))
-//          return
-//        }
-//
-//        ss.view.mbp.execute(.success(title: "登录成功"))
-//        ss.loginResultView.set(with: result)
+//      DispatchQueue.main.async { [weak self] in
+      //      WeChat.login { [weak self] baseResult, error in
+      //        guard let ss = self else { return }
+      //
+      //        guard let baseResult = baseResult else {
+      //          jack.error("Failed to login WeChat: \(error!)")
+      //          ss.view.mbp.execute(.failure(title: "登录失败"))
+      //          return
+      //        }
+      //
+      //        guard let result = baseResult as? WeChatLoginResult else {
+      //          jack.error("Can not cast LoginResult instance to WeChatLoginResult")
+      //          ss.view.mbp.execute(.failure(title: "登录失败"))
+      //          return
+      //        }
+      //
+      //        ss.view.mbp.execute(.success(title: "登录成功"))
+      //        ss.loginResultView.set(with: result)
+      //      }
 //      }
+
     }
 
     form +++ Section("INPUTS")
