@@ -36,9 +36,9 @@ class WeChatVC: FormViewController {
     let image = #imageLiteral(resourceName: "imageToShare")
     return UIImagePNGRepresentation(image)!
   }
-  
+
   var previewImage: Data {
-    let previewImage =  #imageLiteral(resourceName: "preivewImageToShare")
+    let previewImage = #imageLiteral(resourceName: "previewImageToShare")
     return UIImagePNGRepresentation(previewImage)!
   }
 
@@ -101,12 +101,12 @@ class WeChatVC: FormViewController {
 
     <<< TextRow("title") {
       $0.title = "Title"
-      $0.value = "Test"
+      $0.value = "Title: SocialKit Test"
     }
 
     <<< TextRow("description") {
       $0.title = "Description"
-      $0.value = "SocialKit framework"
+      $0.value = "Description: Shared from SocialKit demo app."
     }
 
     <<< PickerInlineRow<WeChat.SharingTarget>("sharingTarget") {

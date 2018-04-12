@@ -63,19 +63,19 @@ public enum SocialError: Error, CustomStringConvertible {
   public var description: String {
     switch self {
     case .authorization:
-      return "Authorization failed"
+      return "authorization failed"
     case .app(let reason):
-      return "Platform client app unavailable, \(reason ?? "reason unknown")"
+      return "platform client app unavailable, \(reason ?? "reason unknown")"
     case .sdk(let reason):
-      return "The platform SDK is incompatible, \(reason ?? "reason unknown")"
+      return "the platform SDK is incompatible, \(reason ?? "reason unknown")"
     case .api(let reason):
       return "API error, \(reason ?? "reason unknown")"
     case .send(let reason):
-      return "Failed to send, \(reason ?? "reason unknown")"
+      return "failed to send request, \(reason ?? "reason unknown")"
     case .canceled(let reason):
-      return "Task canceled, \(reason ?? "reason unknown")"
+      return "task canceled, \(reason ?? "reason unknown")"
     case .other(let reason):
-      return "Other error, \(reason ?? "reason unknown")"
+      return "other error, \(reason ?? "reason unknown")"
     }
   }
 

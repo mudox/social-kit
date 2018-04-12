@@ -17,7 +17,7 @@ import JacKit
 fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 
 class QQVC: FormViewController {
-  
+
   var loginResultView: QQLoginResultView!
 
   var titleInput: String? {
@@ -33,9 +33,15 @@ class QQVC: FormViewController {
   }
 
   var image: Data {
-    let image = #imageLiteral(resourceName: "ImageToShare")
+    let image = #imageLiteral(resourceName: "imageToShare")
     return UIImagePNGRepresentation(image)!
   }
+  
+  var previewImage: Data {
+    let image = #imageLiteral(resourceName: "previewImageToShare")
+    return UIImagePNGRepresentation(image)!
+  }
+  
 
   let url = URL(string: "https://github.com/mudox")!
 
@@ -54,7 +60,7 @@ class QQVC: FormViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+
     navigationItem.title = "QQ"
 
     let nib = UINib(nibName: "QQLoginResultView", bundle: nil)
@@ -71,7 +77,7 @@ class QQVC: FormViewController {
     }.onCellSelection { cell, row in
       QQ.login { [weak self] baseResult, error in
         guard let ss = self else { return }
-        
+
         guard let baseResult = baseResult else {
           jack.error("Failed to login QQ: \(error!)")
           ss.view.mbp.execute(.failure(title: "登录失败"))
@@ -83,7 +89,7 @@ class QQVC: FormViewController {
           ss.view.mbp.execute(.failure(title: "登录失败"))
           return
         }
-        
+
         ss.view.mbp.execute(.success(title: "登录成功"))
         ss.loginResultView.set(with: result)
       }
@@ -93,17 +99,17 @@ class QQVC: FormViewController {
 
     <<< TextRow("title") {
       $0.title = "Title"
-      $0.value = "Test"
+      $0.value = "Title: SocialKit Test"
     }
 
     <<< TextRow("description") {
       $0.title = "Description"
-      $0.value = "SocialKit framework"
+      $0.value = "Description: Shared from SocialKit demo app."
     }
 
     <<< PickerInlineRow<QQ.SharingTarget>("sharingTarget") {
       $0.title = "Target"
-      $0.options = [.qq, .tim]
+      $0.options = [.qq, .tim, .qzone, .favorites]
       $0.value = $0.options[0]
       $0.displayValueFor = {
         switch $0! {
