@@ -5,16 +5,6 @@ fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
 
 extension QQ {
 
-  public enum SharingTarget {
-    // open QQ / TIM, show a sharing targets selector
-    case qq
-    case tim
-    // open QQ and jump directly to integrated QZone interface
-    case qzone
-    // defaults to open QQ and jump directly to Favorites interface
-    case favorites
-  }
-
   fileprivate func _handle(_ code: QQApiSendResultCode) -> SocialError? {
     let error: SocialError?
 
@@ -127,7 +117,9 @@ extension QQ {
     let code = QQApiInterface.send(request)
     let error = _handle(code)
 
-    end(with: .sharing(error: error))
+    if error != nil {
+      end(with: .sharing(error: error))
+    }
   }
 
   // MARK: - Share a Text Message
@@ -277,33 +269,3 @@ extension QQ {
   }
 
 }
-
-// MARK: - QQApiInterfaceDelegate
-extension QQ: QQApiInterfaceDelegate {
-
-  public func onReq(_ baseReqeust: QQBaseReq!) {
-    jack.warn("This callback is currently unhandled, argument `baseRequest`: \(baseReqeust)")
-  }
-
-  public func onResp(_ baseResponse: QQBaseResp!) {
-    switch baseResponse {
-    case let response as SendMessageToQQResp:
-      jack.debug("response.result: \(response.result), TCOpenSDKErrorMsgSuccess: \(TCOpenSDKErrorMsgSuccess)")
-
-      if let errorDescription = response.errorDescription {
-        end(with: .sharing(error: SocialError.send(reason: errorDescription)))
-      } else {
-        end(with: .sharing(error: nil))
-      }
-    default:
-      let message = "Isn't SendMessageToQQResp` the only subclass of `QQBaseResp`?"
-      end(with: .sharing(error: SocialError.other(reason: message)))
-    }
-  }
-
-  public func isOnlineResponse(_ response: [AnyHashable: Any]!) {
-    jack.warn("This callback is currently unhandled, argument `response`: \(response)")
-  }
-
-}
-

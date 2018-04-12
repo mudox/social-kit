@@ -3,7 +3,7 @@ import Foundation
 import JacKit
 fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
 
-public class QQ: SocialPlatformAgent {
+public class QQ: BasePlatformAgent {
 
   public static let shared = QQ()
 
@@ -13,7 +13,7 @@ public class QQ: SocialPlatformAgent {
 
   override private init() {
     super.init()
-    jack.info(_platformInfo, from: .custom("QQ Platform Loaded"))
+    jack.info(platformInfo, from: .custom("QQ Platform Loaded"))
   }
 
   public static func initPlatform(appID: String) {
@@ -21,21 +21,21 @@ public class QQ: SocialPlatformAgent {
     QQ.shared.oauth = oauth
   }
 
-  public static func open(_ url: URL) -> Bool {
-    let handledByTencentOAuth = TencentOAuth.handleOpen(url)
-    let handledByQQApiInterface = QQApiInterface.handleOpen(url, delegate: shared)
+}
 
-    jack.verbose("""
-    TencentOAuth: \(handledByTencentOAuth ? "√" : "x") | \
-    QQApiInterface: \(handledByQQApiInterface ? "√" : "x")
-    """)
-
-    return handledByTencentOAuth || handledByQQApiInterface
+extension QQ: PlatformAgentType {
+  
+  public enum SharingTarget {
+    // open QQ / TIM, show a sharing targets selector
+    case qq
+    case tim
+    // open QQ and jump directly to integrated QZone interface
+    case qzone
+    // defaults to open QQ and jump directly to Favorites interface
+    case favorites
   }
 
-  // MARK: Helpers
-
-  private var _platformInfo: String {
+  public var platformInfo: String {
     var version = "\(TencentOAuth.sdkVersion() ?? "unkown") - \(TencentOAuth.sdkSubVersion() ?? "unknown")"
     if TencentOAuth.isLiteSDK() {
       version += " (Lite)"
@@ -45,7 +45,7 @@ public class QQ: SocialPlatformAgent {
     if QQApiInterface.isQQInstalled() {
       qq = "Installed"
       if !TencentOAuth.iphoneQQSupportSSOLogin() {
-        qq += " Login ⚠️"
+        qq += " SSO ⚠️"
       }
       if !QQApiInterface.isQQSupportApi() {
         qq += " API ⚠️"
@@ -71,10 +71,33 @@ public class QQ: SocialPlatformAgent {
     }
 
     return """
-      - SDK        :   \(version)
-      -  QQ        :   \(qq)
-      - TIM        :   \(tim)
-    """
+        - SDK        :   \(version)
+        -  QQ        :   \(qq)
+        - TIM        :   \(tim)
+      """
   }
 
+  public static func open(_ url: URL) -> Bool {
+    let handledByTencentOAuth = TencentOAuth.handleOpen(url)
+    let handledByQQApiInterface = QQApiInterface.handleOpen(url, delegate: shared)
+
+    jack.verbose("""
+      TencentOAuth: \(handledByTencentOAuth ? "√" : "x") | \
+      QQApiInterface: \(handledByQQApiInterface ? "√" : "x")
+      """)
+
+    return handledByTencentOAuth || handledByQQApiInterface
+  }
+
+  public var canLogin: Bool {
+    let qqOkay = TencentOAuth.iphoneQQInstalled() && TencentOAuth.iphoneQQSupportSSOLogin()
+    let timOkay = TencentOAuth.iphoneTIMInstalled() && TencentOAuth.iphoneTIMSupportSSOLogin()
+    return qqOkay || timOkay
+  }
+
+  public var canShare: Bool {
+    let qqOkay = QQApiInterface.isQQInstalled() && QQApiInterface.isQQSupportApi()
+    let timOkay =  QQApiInterface.isTIMInstalled() && QQApiInterface.isTIMSupportApi()
+    return qqOkay || timOkay
+  }
 }
