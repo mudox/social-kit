@@ -175,41 +175,45 @@
                         <constraint firstItem="fpr-mG-TUA" firstAttribute="leading" secondItem="q7r-sn-0LA" secondAttribute="leading" constant="20" symbolic="YES" id="wgE-7d-q6n"/>
                     </constraints>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Kg-EA-kwg">
-                    <rect key="frame" x="20" y="84" width="335" height="38.5"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Kg-EA-kwg">
+                    <rect key="frame" x="50" y="85" width="275" height="37.5"/>
                     <attributedString key="attributedText">
                         <fragment content="Click">
                             <attributes>
                                 <color key="NSColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                                <font key="NSFont" metaFont="system" size="16"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="13" name=".AppleSystemUIFont"/>
+                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFont"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                         <fragment content=" ">
                             <attributes>
-                                <font key="NSFont" metaFont="system" size="16"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="13" name=".AppleSystemUIFont"/>
+                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFont"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                         <fragment content="Login">
                             <attributes>
                                 <color key="NSColor" red="0.016804177310000001" green="0.19835099580000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <font key="NSFont" size="16" name=".SFNSText"/>
-                                <font key="NSOriginalFont" size="16" name=".SFNSText"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="13" name=".SFNSText"/>
+                                <font key="NSOriginalFont" size="13" name=".SFNSText"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                         <fragment content=" ">
                             <attributes>
-                                <font key="NSFont" metaFont="system" size="16"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="13" name=".AppleSystemUIFont"/>
+                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFont"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                         <fragment content="button below to request basic user information from QQ platform">
                             <attributes>
                                 <color key="NSColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
-                                <font key="NSFont" metaFont="system" size="16"/>
-                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                <font key="NSFont" size="13" name=".AppleSystemUIFont"/>
+                                <font key="NSOriginalFont" size="13" name=".AppleSystemUIFont"/>
+                                <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>
                     </attributedString>
@@ -219,9 +223,8 @@
             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <constraints>
                 <constraint firstItem="q7r-sn-0LA" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="4Hu-Yn-eeL"/>
-                <constraint firstAttribute="trailing" secondItem="2Kg-EA-kwg" secondAttribute="trailing" constant="20" id="98T-NN-cot"/>
                 <constraint firstItem="2Kg-EA-kwg" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="C2N-K0-1w1"/>
-                <constraint firstItem="2Kg-EA-kwg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="PtN-sE-NIn"/>
+                <constraint firstItem="2Kg-EA-kwg" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="50" id="PtN-sE-NIn"/>
                 <constraint firstAttribute="bottom" secondItem="q7r-sn-0LA" secondAttribute="bottom" id="Qb2-Il-LFA"/>
                 <constraint firstItem="q7r-sn-0LA" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="hIB-UJ-OdG"/>
                 <constraint firstItem="2Kg-EA-kwg" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" id="hQU-kd-BPH"/>

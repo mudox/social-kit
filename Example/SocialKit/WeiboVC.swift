@@ -28,26 +28,35 @@ class WeiboVC: FormViewController {
     return self.form.values()["description"] as? String
   }
 
-  var qqTarget: QQ.SharingTarget {
-    return self.form.values()["qqTarget"] as! QQ.SharingTarget
+  var sharingTarget: Weibo.SharingTarget {
+    return self.form.values()["sharingTarget"] as! Weibo.SharingTarget
   }
 
   var image: Data {
-    let image = #imageLiteral(resourceName: "ImageToShare")
+    let image = #imageLiteral(resourceName: "imageToShare")
     return UIImagePNGRepresentation(image)!
+  }
+
+  var previewImage: Data {
+    let previewImage = #imageLiteral(resourceName: "previewImageToShare")
+    return UIImagePNGRepresentation(previewImage)!
+  }
+
+  var imageGroup: [UIImage] {
+    return [#imageLiteral(resourceName: "image04")]
   }
 
   let url = URL(string: "https://github.com/mudox")!
 
-  func completion(for action: String) -> QQ.SharingCompletion {
+  func completion(for action: String) -> Weibo.SharingCompletion {
     return { [weak self] error in
       guard let ss = self else { return }
       if let error = error {
         ss.view.mbp.execute(.failure(title: "分享失败"))
-        jack.error("Sharing \(action) to \(ss.qqTarget) failed: \(error)")
+        jack.error("Sharing \(action) to \(ss.sharingTarget) failed: \(error)")
       } else {
         ss.view.mbp.execute(.success(title: "分享成功"))
-        jack.info("Sharing \(action) to \(ss.qqTarget) succeeded")
+        jack.info("Sharing \(action) to \(ss.sharingTarget) succeeded")
       }
     }
   }
@@ -74,7 +83,7 @@ class WeiboVC: FormViewController {
           guard let ss = self else { return }
 
           guard let baseResult = baseResult else {
-            jack.error("Failed to login QQ: \(error!)")
+            jack.error("Failed to login Weibo: \(error!)")
             ss.view.mbp.execute(.failure(title: "登录失败"))
             return
           }
@@ -103,16 +112,14 @@ class WeiboVC: FormViewController {
       $0.value = "SocialKit framework"
     }
 
-    <<< PickerInlineRow<QQ.SharingTarget>("qqTarget") {
+    <<< PickerInlineRow<Weibo.SharingTarget>("sharingTarget") {
       $0.title = "Target"
-      $0.options = [.qq, .tim]
+      $0.options = [.timeline, .story]
       $0.value = $0.options[0]
       $0.displayValueFor = {
         switch $0! {
-        case .qq: return "QQ"
-        case .tim: return "TIM"
-        case .qzone: return "QZone"
-        case .favorites: return "Favorites"
+        case .timeline: return "Timeline"
+        case .story: return "Story"
         }
       }
     }
@@ -123,41 +130,36 @@ class WeiboVC: FormViewController {
       $0.title = "Simple text"
     }.onCellSelection { [weak self] cell, row in
       guard let ss = self else { return }
-      QQ.share(
-        to: ss.qqTarget,
+      Weibo.share(
+        to: ss.sharingTarget,
         text: "Hey, this is a test message from SocialKit framework",
         completion: ss.completion(for: "text")
       )
     }
 
     <<< ButtonRow() {
-      $0.title = "Local Image"
+      $0.title = "Sinle Image"
     }.onCellSelection { [weak self] cell, row in
       guard let ss = self else { return }
-      QQ.share(
-        to: ss.qqTarget,
+      Weibo.share(
+        to: ss.sharingTarget,
         image: ss.image,
         title: ss.titleInput ?? "Test SocialKit",
-        description: ss.descriptionInput,
-        completion: ss.completion(for: "image")
+        completion: ss.completion(for: "a group of images")
       )
     }
-
-
+      
     <<< ButtonRow() {
-      $0.title = "Link"
+      $0.title = "A Group of Images"
     }.onCellSelection { [weak self] cell, row in
       guard let ss = self else { return }
-      QQ.share(
-        to: ss.qqTarget,
-        link: ss.url,
-        previewImage: ss.image,
+      Weibo.share(
+        to: ss.sharingTarget,
+        images: ss.imageGroup,
         title: ss.titleInput ?? "Test SocialKit",
-        description: ss.descriptionInput,
-        completion: ss.completion(for: "link")
+        completion: ss.completion(for: "a group of images")
       )
     }
-
   }
 
 }
