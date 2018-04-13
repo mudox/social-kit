@@ -92,6 +92,16 @@ extension Weibo: WeiboSDKDelegate {
     }
   }
 
+}
 
-
+extension Weibo: WBMediaTransferProtocol {
+  public func wbsdk_TransferDidReceive(_ object: Any!) {
+    print(object)
+  }
+  
+  public func wbsdk_TransferDidFailWith(_ errorCode: WBSDKMediaTransferErrorCode, andError error: Error!) {
+    print("\(errorCode) - \(error)")
+  }
+  
+  
 }

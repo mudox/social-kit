@@ -4,7 +4,7 @@ import JacKit
 fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
 
 extension Weibo {
-  
+
 //  func _checkImageSizeNotExceeds10M(_ data: Data, completion block: SharingCompletion?) -> Bool {
 //    if data.count > 10 * 1024 * 1024 {
 //      let error = SocialError.api(reason: "Image data size (\(data.count)) exceeds 10M")
@@ -15,7 +15,7 @@ extension Weibo {
 //      return true
 //    }
 //  }
-//  
+//
 //  func _checkPreviewImageSizeNotExceeds32K(_ data: Data?, completion block: SharingCompletion?) -> Bool {
 //    if let data = data, data.count > 32 * 1024 {
 //      let error = SocialError.api(reason: "Preview image size (\(data.count)) exceeds 32K")
@@ -27,201 +27,165 @@ extension Weibo {
 //    }
 //  }
 //
-//  /// Base method of sharing, the more convenient `shareXXX` methods is prefered.
-//  ///
-//  /// - Parameters:
-//  ///   - target: Sharing target.
-//  ///   - object: The message content object.
-//  ///   - block: completion block.
-//  public func send(
-//    to target: SharingTarget = .session,
-//    request: SendMessageToWXReq,
-//    completion block: SharingCompletion?
-//  ) {
-//    Weibo.shared.begin(.sharing(completion: block))
-//
-//    switch target {
-//    case .session:
-//      request.scene = Int32(WXSceneSession.rawValue)
-//    case .timeline:
-//      request.scene = Int32(WXSceneTimeline.rawValue)
-//    case .favorites:
-//      request.scene = Int32(WXSceneFavorite.rawValue)
-//    }
-//
-//    let success = WXApi.send(request)
-//    if !success {
-//      let error = SocialError.send(reason: """
-//        Calling `WXApi.send` method returned false, possible reason:
-//          - Image data size exceeds 10M
-//          - Preview image data size exceeds 32K
-//        """)
-//      end(with: .sharing(error: error))
-//    } else {
-//      // Caution:
-//      //   As of v1.8.2, when user deny to open Weibo app, `WXapi.send` call
-//      //   return true immediately.
-//      jack.verbose("""
-//        Calling `WApi.send` method returned true. As of WeiboSDK v1.8.2, \
-//        when user denied to open Weibo app, the method just return true, with \
-//        the completion block being uncleaned.
-//        """)
-//    }
-//  }
-//
-//  // MARK: - Share a Text Message
-//
-//  /// Share a local image.
-//  ///
-//  /// - Parameters:
-//  ///   - target: Sharing target.
-//  ///   - text: The text content to share.
-//  ///   - block: completion block.
-//  public static func share(
-//    to target: SharingTarget = .session,
-//    text: String, completion
-//    block: SharingCompletion?
-//  ) {
-//    Weibo.shared._share(
-//      to: target,
-//      text: text,
-//      completion: block
-//    )
-//  }
-//
-//  private func _share(
-//    to target: SharingTarget = .session,
-//    text: String,
-//    completion block: SharingCompletion?
-//  ) {
-//    let request = SendMessageToWXReq()
-//    request.bText = true
-//    request.text = text
-//
-//    send(
-//      to: target,
-//      request: request,
-//      completion: block
-//    )
-//  }
-//
-//  // MARK: - Share an Image
-//
-//  /// Share a local image.
-//  ///
-//  /// - Parameters:
-//  ///   - target: Sharing target.
-//  ///   - imageData: Image data size should not exceeds __10M__.
-//  ///   - previewImage: Preview mage data size should not exceeds __32K__.
-//  ///   - title: title.
-//  ///   - description: description.
-//  ///   - block: completion block.
-//  public static func share(
-//    to target: SharingTarget = .session,
-//    image: Data,
-//    previewImage: Data? = nil,
-//    title: String,
-//    description: String? = nil,
-//    completion block: SharingCompletion?
-//  ) {
-//    Weibo.shared._share(
-//      to: target,
-//      image: image,
-//      previewImage: previewImage,
-//      title: title,
-//      description: description,
-//      completion: block
-//    )
-//  }
-//
-//  private func _share(
-//    to target: SharingTarget = .session,
-//    image: Data,
-//    previewImage: Data? = nil,
-//    title: String,
-//    description: String? = nil,
-//    completion block: SharingCompletion?
-//  ) {
-//    guard _checkImageSizeNotExceeds10M(image, completion: block) else { return }
-//    guard _checkPreviewImageSizeNotExceeds32K(previewImage, completion: block) else { return }
-//
-//    let imageObject = WXImageObject()
-//    imageObject.imageData = image
-//
-//    let message = WXMediaMessage()
-//    message.title = title
-//    message.description = description
-//    message.thumbData = previewImage
-//    message.mediaObject = imageObject
-//
-//    let request = SendMessageToWXReq()
-//    request.bText = false
-//    request.message = message
-//
-//    send(
-//      to: target,
-//      request: request,
-//      completion: block
-//    )
-//  }
-//
-//  // MARK: - Share a Link
-//
-//  /// Share a local image.
-//  ///
-//  /// - Parameters:
-//  ///   - target: Sharing target.
-//  ///   - url: link address.
-//  ///   - previewImage: Preview mage data, not bigger than __32K__.
-//  ///   - title: title.
-//  ///   - description: description.
-//  ///   - block: completion block.
-//  public static func share(
-//    to target: SharingTarget = .session,
-//    link url: URL,
-//    previewImage: Data,
-//    title: String,
-//    description: String? = nil,
-//    completion block: SharingCompletion?
-//  ) {
-//    Weibo.shared._share(
-//      to: target,
-//      link: url,
-//      previewImage: previewImage,
-//      title: title,
-//      description: description,
-//      completion: block
-//    )
-//  }
-//
-//  private func _share(
-//    to target: SharingTarget = .session,
-//    link url: URL,
-//    previewImage: Data? = nil,
-//    title: String,
-//    description: String? = nil,
-//    completion block: SharingCompletion?
-//  ) {
-//    guard _checkPreviewImageSizeNotExceeds32K(previewImage, completion: block) else { return }
-//
-//    let linkObject = WXWebpageObject()
-//    linkObject.webpageUrl = url.absoluteString
-//
-//    let message = WXMediaMessage()
-//    message.title = title
-//    message.description = description
-//    message.thumbData = previewImage
-//    message.mediaObject = linkObject
-//
-//    let request = SendMessageToWXReq()
-//    request.bText = false
-//    request.message = message
-//
-//    send(
-//      to: target,
-//      request: request,
-//      completion: block
-//    )
-//  }
 
+  /// Base method of sharing, the more convenient `shareXXX` methods is prefered.
+  ///
+  /// - Parameters:
+  ///   - target: Sharing target.
+  ///   - object: The message content object.
+  ///   - block: completion block.
+  public func send(
+    to target: SharingTarget,
+    message: WBMessageObject,
+    completion block: SharingCompletion?
+  ) {
+    Weibo.shared.begin(.sharing(completion: block))
+
+    switch target {
+    case .timeline:
+      message.imageObject?.isShareToStory = false
+      message.videoObject?.isShareToStory = false
+    case .story:
+      message.imageObject?.isShareToStory = true
+      message.videoObject?.isShareToStory = true
+    }
+
+    guard let request = WBSendMessageToWeiboRequest.request(
+      withMessage: message,
+      authInfo: authorizationRequest,
+      access_token: nil
+    ) as? WBSendMessageToWeiboRequest else {
+      end(with: .sharing(error: .api(reason: "Creating `WBSendMessageToWeiboRequest` instance failed")))
+      return
+    }
+
+    let success = WeiboSDK.send(request)
+    if !success {
+      end(with: .sharing(error: .send(reason: "call `WeiboSDK.send` returned false")))
+
+    }
+  }
+
+  // MARK: - Share a Text Message
+
+  /// Share a local image.
+  ///
+  /// - Note: text (as well as media) can not be shared to story (SharintTarget.story).
+  ///
+  /// - Parameters:
+  ///   - target: Sharing target.
+  ///   - text: The text content to share.
+  ///   - block: completion block.
+  public static func share(
+    to target: SharingTarget = .timeline,
+    text: String, completion
+    block: SharingCompletion?
+  ) {
+    Weibo.shared._share(
+      to: target,
+      text: text,
+      completion: block
+    )
+  }
+
+  private func _share(
+    to target: SharingTarget,
+    text: String,
+    completion block: SharingCompletion?
+  ) {
+    let message = WBMessageObject()
+    message.text = text
+    send(to: target, message: message, completion: block)
+  }
+
+  // MARK: - Share a Single Image
+
+  /// Share an of images.
+  ///
+  /// - Parameters:
+  ///   - target: Sharing target.
+  ///   - image: Image data to share, must not exceeds __10M__.
+  ///   - title: title.
+  ///   - block: completion block.
+  public static func share(
+    to target: SharingTarget = .timeline,
+    image: Data,
+    title: String,
+    completion block: SharingCompletion?
+  ) {
+    Weibo.shared._share(
+      to: target,
+      image: image,
+      title: title,
+      completion: block
+    )
+  }
+
+  private func _share(
+    to target: SharingTarget,
+    image: Data,
+    title: String,
+    completion block: SharingCompletion?
+  ) {
+    guard image.count < 10 * 1024 * 1024 else {
+      begin(.sharing(completion: block))
+      end(with: .sharing(error: .api(reason: "image data size exceeds 10M")))
+      return
+    }
+
+    let imageObject = WBImageObject()
+    imageObject.imageData = image
+
+    let message = WBMessageObject()
+    message.text = title
+    message.imageObject = imageObject
+
+    send(to: target, message: message, completion: block)
+  }
+
+  // MARK: - Share an Group of Images
+  
+//  /// Share an Gorup of Images.
+//  ///
+//  /// - Parameters:
+//  ///   - target: Sharing target.
+//  ///   - image: Image data to share, must not exceeds __10M__.
+//  ///   - title: title.
+//  ///   - block: completion block.
+//  public static func share(
+//    to target: SharingTarget = .timeline,
+//    images: [UIImage],
+//    title: String,
+//    completion block: SharingCompletion?
+//    ) {
+//    Weibo.shared._share(
+//      to: target,
+//      images: images,
+//      title: title,
+//      completion: block
+//    )
+//  }
+//
+//  private func _share(
+//    to target: SharingTarget,
+//    images: [UIImage],
+//    title: String,
+//    completion block: SharingCompletion?
+//    ) {
+//    guard !images.isEmpty else {
+//      begin(.sharing(completion: block))
+//      end(with: .sharing(error: .api(reason: "image array to share is empty")))
+//      return
+//    }
+//
+//    let imageObject = WBImageObject()
+//    imageObject.delegate = self
+//    imageObject.add(images)
+//
+//    let message = WBMessageObject()
+//    message.text = title
+//    message.imageObject = imageObject
+//
+//    send(to: target, message: message, completion: block)
+//  }
 }

@@ -31,10 +31,10 @@ extension WeChat {
   ///
   /// - Parameters:
   ///   - target: Sharing target.
-  ///   - object: The message content object.
+  ///   - request: The sharing request object.
   ///   - block: completion block.
   public func send(
-    to target: SharingTarget = .session,
+    to target: SharingTarget,
     request: SendMessageToWXReq,
     completion block: SharingCompletion?
   ) {
@@ -135,7 +135,7 @@ extension WeChat {
   }
 
   private func _share(
-    to target: SharingTarget = .session,
+    to target: SharingTarget,
     image: Data,
     previewImage: Data? = nil,
     title: String,
@@ -195,7 +195,7 @@ extension WeChat {
   }
 
   private func _share(
-    to target: SharingTarget = .session,
+    to target: SharingTarget,
     link url: URL,
     previewImage: Data? = nil,
     title: String,

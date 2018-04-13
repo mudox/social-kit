@@ -494,7 +494,7 @@ extern NSString * const WeiboSDKGetAidFailNotification;
 typedef NS_ENUM(NSInteger, WBSDKMediaTransferErrorCode)
 {
     WBSDKMediaTransferAlbumPermissionError              = 0,//相册权限
-    WBSDKMediaTransferAlbumWriteError               = 0,//相册写入错误
+    WBSDKMediaTransferAlbumWriteError                   = 0,//相册写入错误
     WBSDKMediaTransferAlbumAssetTypeError               = 0,//资源类型错误
 };
 

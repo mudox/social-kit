@@ -94,7 +94,7 @@ extension QQ {
   ///   - object: The message content object.
   ///   - block: completion block.
   public func send(
-    to target: SharingTarget = .qq,
+    to target: SharingTarget,
     object: QQApiObject,
     completion block: SharingCompletion?
   ) {
@@ -185,7 +185,7 @@ extension QQ {
   }
 
   private func _share(
-    to target: SharingTarget = .qq,
+    to target: SharingTarget,
     image: Data,
     previewImage: Data? = nil,
     title: String,
@@ -245,7 +245,7 @@ extension QQ {
   }
 
   private func _share(
-    to target: SharingTarget = .qq,
+    to target: SharingTarget,
     link url: URL,
     previewImage: Data,
     title: String,

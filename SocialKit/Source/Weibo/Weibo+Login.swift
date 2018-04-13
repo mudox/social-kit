@@ -38,20 +38,23 @@ public class WeiboLoginResult: BaseLoginResult, LoginResultType {
 
 extension Weibo {
 
+  // used in login and constructing sharing request
+  var authorizationRequest: WBAuthorizeRequest {
+    let request = WBAuthorizeRequest()
+    request.redirectURI = "https://api.weibo.com/oauth2/default.html"
+    request.scope = "all"
+    request.shouldShowWebViewForAuthIfCannotSSO = false // disable H5 login
+    request.shouldOpenWeiboAppInstallPageIfNotInstalled = true
+    return request
+  }
+
   public static func login(completion: @escaping LoginCompletion) {
     Weibo.shared._login(completion: completion)
   }
 
   private func _login(completion: @escaping LoginCompletion) {
     begin(.login(completion: completion))
-
-    let request = WBAuthorizeRequest()
-    request.redirectURI = "https://api.weibo.com/oauth2/default.html"
-    request.scope = "all"
-    request.shouldShowWebViewForAuthIfCannotSSO = false // disable H5 login
-    request.shouldOpenWeiboAppInstallPageIfNotInstalled = true
-
-    WeiboSDK.send(request)
+    WeiboSDK.send(authorizationRequest)
   }
 
   func _getUserInfo(accessToken: String, userID: String, completion block: @escaping ([String: Any]?, SocialError?) -> ()) {
@@ -107,7 +110,7 @@ extension Weibo {
         block(nil, e)
       }
     }
-    
+
     task.resume()
   }
 
