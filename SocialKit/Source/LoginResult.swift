@@ -9,6 +9,7 @@ public class BaseLoginResult {
   public let openID: String
   public let expirationDate: Date
 
+  /// User information in JSON format that is associated with the openID.
   public let userInfo: [String: Any]
 
   init(accessToken: String, openID: String, expirationDate: Date, userInfo: [String: Any]) {

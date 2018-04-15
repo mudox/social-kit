@@ -18,12 +18,12 @@ extension QQ: TencentSessionDelegate {
   }
 
   public func tencentDidNotLogin(_ cancelled: Bool) {
-    var error: SocialError
+    var error: SocialKitError
     if cancelled {
-      error = SocialError.canceled(reason: "canceled by user")
+      error = SocialKitError.canceled(reason: "canceled by user")
     } else {
       let reason = TencentOAuth.getLastErrorMsg()
-      error = SocialError.other(reason: """
+      error = SocialKitError.other(reason: """
         TencenOAuth.getLastErrorMsg: \(reason ?? "nil")
         """)
     }
@@ -32,7 +32,7 @@ extension QQ: TencentSessionDelegate {
 
   public func tencentDidNotNetWork() {
     let reason = TencentOAuth.getLastErrorMsg()
-    let error = SocialError.send(reason: """
+    let error = SocialKitError.send(reason: """
       network error.
       TencenOAuth.getLastErrorMsg: \(reason ?? "nil")
       """)
@@ -81,13 +81,13 @@ extension QQ: QQApiInterfaceDelegate {
       jack.debug("response.result: \(response.result), TCOpenSDKErrorMsgSuccess: \(TCOpenSDKErrorMsgSuccess)")
 
       if let errorDescription = response.errorDescription {
-        end(with: .sharing(error: SocialError.send(reason: errorDescription)))
+        end(with: .sharing(error: SocialKitError.send(reason: errorDescription)))
       } else {
         end(with: .sharing(error: nil))
       }
     default:
       let message = "Isn't SendMessageToQQResp` the only subclass of `QQBaseResp`?"
-      end(with: .sharing(error: SocialError.other(reason: message)))
+      end(with: .sharing(error: SocialKitError.other(reason: message)))
     }
   }
 

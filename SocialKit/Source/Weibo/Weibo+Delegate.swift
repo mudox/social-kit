@@ -6,12 +6,12 @@ fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 extension Weibo: WeiboSDKDelegate {
 
   public func didReceiveWeiboRequest(_ request: WBBaseRequest!) {
-    jack.assertFailure("This callback is currently unhandled, argument `request`: \(request)")
+    jack.failure("This callback is currently unhandled, argument `request`: \(request)")
   }
 
   public func didReceiveWeiboResponse(_ baseResponse: WBBaseResponse!) {
     guard let baseResponse = baseResponse else {
-      jack.assertFailure("got a nil `WBBaseResponse` argument")
+      jack.failure("Got a nil `WBBaseResponse` argument")
       return
     }
 
@@ -21,7 +21,7 @@ extension Weibo: WeiboSDKDelegate {
     case let response as WBSendMessageToWeiboResponse:
       _handle(response)
     default:
-      jack.assertFailure("Unhandled response kind \(type(of: baseResponse))")
+      jack.failure("Unhandled response kind \(type(of: baseResponse))")
     }
   }
 
@@ -41,7 +41,7 @@ extension Weibo: WeiboSDKDelegate {
 
         _getUserInfo(accessToken: token!, userID: id!) { [weak self] json, error in
           guard let ss = self else {
-            jack.assertFailure("self should last forever")
+            jack.failure("`self` should last forever")
             return
           }
           
@@ -60,7 +60,7 @@ extension Weibo: WeiboSDKDelegate {
         }
       }
     } catch {
-      end(with: .login(result: nil, error: (error as! SocialError)))
+      end(with: .login(result: nil, error: (error as! SocialKitError)))
     }
   }
 
@@ -68,7 +68,7 @@ extension Weibo: WeiboSDKDelegate {
     end(with: .sharing(error: _error(for: response)))
   }
 
-  func _error(for response: WBBaseResponse) -> SocialError? {
+  func _error(for response: WBBaseResponse) -> SocialKitError? {
     switch response.statusCode {
 
     case .success:

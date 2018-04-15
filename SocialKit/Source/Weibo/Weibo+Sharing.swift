@@ -145,13 +145,13 @@ extension Weibo {
 
   // MARK: - Share an Group of Images
   
-//  /// Share an Gorup of Images.
-//  ///
-//  /// - Parameters:
-//  ///   - target: Sharing target.
-//  ///   - image: Image data to share, must not exceeds __10M__.
-//  ///   - title: title.
-//  ///   - block: completion block.
+  /// Share an Gorup of Images.
+  ///
+  /// - Parameters:
+  ///   - target: Sharing target.
+  ///   - image: Image data to share, must not exceeds __10M__.
+  ///   - title: title.
+  ///   - block: completion block.
 //  public static func share(
 //    to target: SharingTarget = .timeline,
 //    images: [UIImage],
@@ -188,4 +188,6 @@ extension Weibo {
 //
 //    send(to: target, message: message, completion: block)
 //  }
+  
+  
 }

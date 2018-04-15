@@ -7,7 +7,7 @@ extension WeChat {
   
   func _checkImageSizeNotExceeds10M(_ data: Data, completion block: SharingCompletion?) -> Bool {
     if data.count > 10 * 1024 * 1024 {
-      let error = SocialError.api(reason: "Image data size (\(data.count)) exceeds 10M")
+      let error = SocialKitError.api(reason: "Image data size (\(data.count)) exceeds 10M")
       begin(.sharing(completion: block))
       end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
       return false
@@ -18,7 +18,7 @@ extension WeChat {
   
   func _checkPreviewImageSizeNotExceeds32K(_ data: Data?, completion block: SharingCompletion?) -> Bool {
     if let data = data, data.count > 32 * 1024 {
-      let error = SocialError.api(reason: "Preview image size (\(data.count)) exceeds 32K")
+      let error = SocialKitError.api(reason: "Preview image size (\(data.count)) exceeds 32K")
       begin(.sharing(completion: block))
       end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
       return false
@@ -51,7 +51,7 @@ extension WeChat {
 
     let success = WXApi.send(request)
     if !success {
-      let error = SocialError.send(reason: """
+      let error = SocialKitError.send(reason: """
         Calling `WXApi.send` method returned false, possible reason:
           - Image data size exceeds 10M
           - Preview image data size exceeds 32K
