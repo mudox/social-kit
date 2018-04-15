@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum SocialError: Error, CustomStringConvertible {
+public enum SocialKitError: Error, CustomStringConvertible {
 
   /// Authorization failed.
   case authorization

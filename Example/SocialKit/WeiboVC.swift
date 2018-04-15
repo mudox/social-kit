@@ -138,7 +138,7 @@ class WeiboVC: FormViewController {
     }
 
     <<< ButtonRow() {
-      $0.title = "Sinle Image"
+      $0.title = "Single Image"
     }.onCellSelection { [weak self] cell, row in
       guard let ss = self else { return }
       Weibo.share(
@@ -148,18 +148,18 @@ class WeiboVC: FormViewController {
         completion: ss.completion(for: "a group of images")
       )
     }
-      
-    <<< ButtonRow() {
-      $0.title = "A Group of Images"
-    }.onCellSelection { [weak self] cell, row in
-      guard let ss = self else { return }
-      Weibo.share(
-        to: ss.sharingTarget,
-        images: ss.imageGroup,
-        title: ss.titleInput ?? "Test SocialKit",
-        completion: ss.completion(for: "a group of images")
-      )
-    }
+    
+//    <<< ButtonRow() {
+//      $0.title = "A Group of Images"
+//    }.onCellSelection { [weak self] cell, row in
+//      guard let ss = self else { return }
+//      Weibo.share(
+//        to: ss.sharingTarget,
+//        images: ss.imageGroup,
+//        title: ss.titleInput ?? "Test SocialKit",
+//        completion: ss.completion(for: "a group of images")
+//      )
+//    }
   }
 
 }

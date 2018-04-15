@@ -12,6 +12,7 @@
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
 		607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDC1AFB9204008FA782 /* Images.xcassets */; };
 		607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 607FACDE1AFB9204008FA782 /* LaunchScreen.xib */; };
+		8EBEA3460A050FE7C0401825 /* Pods_Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DF360F6C102A506FCACC969 /* Pods_Tests.framework */; };
 		CCE0F1EDB3D3FA4DB41206FD /* Pods_Demo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C0EBC9257A8ABB8C5ED3FC03 /* Pods_Demo.framework */; };
 		F405E91A207EE76100DD7AE7 /* WeiboSDK.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F405E919207EE76100DD7AE7 /* WeiboSDK.bundle */; };
 		F423981A207D1D070041BEC0 /* LoginResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4239819207D1D070041BEC0 /* LoginResultView.swift */; };
@@ -33,6 +34,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4DF360F6C102A506FCACC969 /* Pods_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD01AFB9204008FA782 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		607FACD41AFB9204008FA782 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		607FACD51AFB9204008FA782 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8EBEA3460A050FE7C0401825 /* Pods_Tests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -94,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				C0EBC9257A8ABB8C5ED3FC03 /* Pods_Demo.framework */,
+				4DF360F6C102A506FCACC969 /* Pods_Tests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
