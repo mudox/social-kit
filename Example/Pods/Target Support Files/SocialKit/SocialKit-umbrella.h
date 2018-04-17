@@ -11,6 +11,8 @@
 #endif
 
 #import "SocialKit.h"
+#import "AlipaySDK.h"
+#import "APayAuthInfo.h"
 #import "QQApiInterface.h"
 #import "QQApiInterfaceObject.h"
 #import "sdkdef.h"

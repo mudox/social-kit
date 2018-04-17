@@ -35,7 +35,8 @@ Pod::Spec.new do |s|
 
   s.frameworks = [
     'Photos', 'ImageIO', 'SystemConfiguration', 'CoreText', 'QuartzCore',
-    'Security', 'UIKit', 'Foundation', 'CoreGraphics', 'CoreTelephony'
+    'Security', 'UIKit', 'Foundation', 'CoreGraphics', 'CoreTelephony',
+    'CoreMotion'
   ]
   s.libraries = 'stdc++', 'sqlite3', 'iconv', 'c++', 'sqlite3', 'z'
 

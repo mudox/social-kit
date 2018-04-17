@@ -52,7 +52,7 @@
 		CACF9DB1B2217EC7C3D63282 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
 		D1F9F2B4588E63C57017D735 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D6143785D5B90451D120C3B5 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
-		F405E919207EE76100DD7AE7 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = WeiboSDK.bundle; path = ../SocialKit/Library/Weibo/v.3.2.3/WeiboSDK.bundle; sourceTree = "<group>"; };
+		F405E919207EE76100DD7AE7 /* WeiboSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = WeiboSDK.bundle; path = ../../SocialKit/Library/Weibo/v.3.2.3/WeiboSDK.bundle; sourceTree = "<group>"; };
 		F4239819207D1D070041BEC0 /* LoginResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginResultView.swift; sourceTree = "<group>"; };
 		F423981B207D1D270041BEC0 /* LoginResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoginResultView.xib; sourceTree = "<group>"; };
 		F423981D207D3DC80041BEC0 /* EurekaFormStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EurekaFormStyle.swift; sourceTree = "<group>"; };
@@ -105,7 +105,6 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				F405E919207EE76100DD7AE7 /* WeiboSDK.bundle */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Demo */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -147,6 +146,7 @@
 		607FACD31AFB9204008FA782 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F405E919207EE76100DD7AE7 /* WeiboSDK.bundle */,
 				607FACD41AFB9204008FA782 /* Info.plist */,
 			);
 			name = "Supporting Files";
