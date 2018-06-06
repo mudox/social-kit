@@ -3,10 +3,10 @@ platform :ios, '9.0'
 
 target 'Demo' do
 
-  pod 'JacKit',     :path => '../../JacKit'
-  pod 'iOSKit',     :path => '../../iOSKit'
-  pod 'iOSKit/MBP', :path => '../../iOSKit'
-  pod 'SocialKit',  :path => '../'
+  pod 'JacKit',               :path => '../../JacKit'
+  pod 'MudoxKit',               :path => '../../MudoxKit'
+  pod 'MudoxKit/MBProgressHUD', :path => '../../MudoxKit'
+  pod 'SocialKit',            :path => '../'
 
   pod 'Eureka'
   pod 'Kingfisher'

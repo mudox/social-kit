@@ -3,18 +3,18 @@ PODS:
   - CocoaLumberjack/Swift (3.3.0):
     - CocoaLumberjack/Default
   - Eureka (4.1.1)
-  - iOSKit (0.1.0):
-    - iOSKit/Core (= 0.1.0)
-  - iOSKit/Core (0.1.0):
-    - JacKit
-    - RxCocoa
-    - RxSwift
-  - iOSKit/MBP (0.1.0):
-    - MBProgressHUD (~> 1.0)
   - JacKit (1.0.0-beta1):
     - CocoaLumberjack/Swift (~> 3.3.0)
   - Kingfisher (4.7.0)
   - MBProgressHUD (1.1.0)
+  - MudoxKit (0.1.0):
+    - MudoxKit/Core (= 0.1.0)
+  - MudoxKit/Core (0.1.0):
+    - JacKit
+    - RxCocoa
+    - RxSwift
+  - MudoxKit/MBProgressHUD (0.1.0):
+    - MBProgressHUD
   - RxCocoa (4.1.2):
     - RxSwift (~> 4.0)
   - RxSwift (4.1.2)
@@ -24,14 +24,14 @@ PODS:
 
 DEPENDENCIES:
   - Eureka
-  - iOSKit (from `../../iOSKit`)
-  - iOSKit/MBP (from `../../iOSKit`)
   - JacKit (from `../../JacKit`)
   - Kingfisher
+  - MudoxKit (from `../../MudoxKit`)
+  - MudoxKit/MBProgressHUD (from `../../MudoxKit`)
   - SocialKit (from `../`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - CocoaLumberjack
     - Eureka
     - Kingfisher
@@ -40,24 +40,24 @@ SPEC REPOS:
     - RxSwift
 
 EXTERNAL SOURCES:
-  iOSKit:
-    :path: "../../iOSKit"
   JacKit:
     :path: "../../JacKit"
+  MudoxKit:
+    :path: "../../MudoxKit"
   SocialKit:
     :path: "../"
 
 SPEC CHECKSUMS:
   CocoaLumberjack: 3c8c74683302f9012bb168e1c4b7ae3c0b558431
   Eureka: b88fb930e42c79f8c03c373d0fcdc28c1d6c50ed
-  iOSKit: dbf019719166265c91f98785de802bc1f6a49207
   JacKit: 1e8b3f7e1441a325c39d29f891af81bd0cf5c28d
   Kingfisher: da6b005aa96d37698e3e4f1ccfe96a5b9bbf27d6
   MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
+  MudoxKit: 30695ca77470f88e6a45a07e07a2851ecf41cabb
   RxCocoa: d88ba0f1f6abf040011a9eb4b539324fc426843a
   RxSwift: e49536837d9901277638493ea537394d4b55f570
   SocialKit: 8275eb7ce59f4520499c6ca198dc1b5a4eb2bec3
 
-PODFILE CHECKSUM: 75498a9af4c3c2c9211dc80af922589805ac1f43
+PODFILE CHECKSUM: 07ce35112517d3ea46467e276d0790264ce40c07
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.5.2

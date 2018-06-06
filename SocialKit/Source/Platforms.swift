@@ -3,7 +3,7 @@ import Foundation
 import JacKit
 fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
 
-public class Platforms {
+public final class Platforms {
 
   public enum LoadingInfo: Hashable, CustomStringConvertible {
     
@@ -53,6 +53,10 @@ public class Platforms {
       }
     }
 
+  }
+  
+  public static func load(_ platforms: LoadingInfo...) {
+    load(Set(platforms))
   }
 
   public static func open(_ url: URL) -> Bool {

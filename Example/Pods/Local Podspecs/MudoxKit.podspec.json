@@ -1,16 +1,16 @@
 {
-  "name": "iOSKit",
+  "name": "MudoxKit",
   "version": "0.1.0",
-  "summary": "My iOS extension library",
-  "description": "My iOS app development toolbox",
-  "homepage": "https://github.com/mudox/ios-kit",
+  "summary": "My Cocoa (Touch) extension library",
+  "description": "My Cocoa (Touch) extension library.",
+  "homepage": "https://github.com/mudox/mudox-kit",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
   },
   "authors": "Mudox",
   "source": {
-    "git": "https://github.com/mudox/ios-kit.git",
+    "git": "https://github.com/mudox/mudox-kit.git",
     "tag": "0.1.0"
   },
   "platforms": {
@@ -20,7 +20,7 @@
   "subspecs": [
     {
       "name": "Core",
-      "source_files": "iOSKit/Core/**/*",
+      "source_files": "MudoxKit/Core/**/*",
       "dependencies": {
         "JacKit": [
 
@@ -35,19 +35,19 @@
     },
     {
       "name": "MBProgressHUD",
-      "source_files": "iOSKit/MBProgressHUD/**/*.swift",
+      "source_files": "MudoxKit/MBProgressHUD/**/*.swift",
       "dependencies": {
         "MBProgressHUD": [
 
         ]
       },
       "resource_bundles": {
-        "mbp": "iOSKit/MBP/MBP.xcassets"
+        "mbp": "MudoxKit/MBP/MBP.xcassets"
       }
     },
     {
       "name": "SVProgressHUD",
-      "source_files": "iOSKit/SVProgressHUD/**/*",
+      "source_files": "MudoxKit/SVProgressHUD/**/*",
       "dependencies": {
         "SVProgressHUD": [
 
@@ -56,7 +56,7 @@
     },
     {
       "name": "NVActivityIndicatorView",
-      "source_files": "iOSKit/NVActivityIndicatorView/**/*",
+      "source_files": "MudoxKit/NVActivityIndicatorView/**/*",
       "dependencies": {
         "NVActivityIndicatorView": [
 
@@ -65,11 +65,11 @@
     },
     {
       "name": "ObjectiveC",
-      "source_files": "iOSKit/ObjectiveC/**/*"
+      "source_files": "MudoxKit/ObjectiveC/**/*"
     },
     {
       "name": "SwiftyJSON",
-      "source_files": "iOSKit/SwiftyJSON/**/*",
+      "source_files": "MudoxKit/SwiftyJSON/**/*",
       "dependencies": {
         "SwiftyJSON": [
 
@@ -79,22 +79,22 @@
     {
       "name": "All",
       "dependencies": {
-        "iOSKit/Core": [
+        "MudoxKit/Core": [
 
         ],
-        "iOSKit/MBProgressHUD": [
+        "MudoxKit/MBProgressHUD": [
 
         ],
-        "iOSKit/SVProgressHUD": [
+        "MudoxKit/SVProgressHUD": [
 
         ],
-        "iOSKit/NVActivityIndicatorView": [
+        "MudoxKit/NVActivityIndicatorView": [
 
         ],
-        "iOSKit/SwiftyJSON": [
+        "MudoxKit/SwiftyJSON": [
 
         ],
-        "iOSKit/ObjectiveC": [
+        "MudoxKit/ObjectiveC": [
 
         ]
       }

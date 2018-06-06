@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double iOSKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char iOSKitVersionString[];
+FOUNDATION_EXPORT double MudoxKitVersionNumber;
+FOUNDATION_EXPORT const unsigned char MudoxKitVersionString[];
 

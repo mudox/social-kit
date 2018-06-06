@@ -13,15 +13,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
     application.mdx.dumpInfo()
-    application.mdx.observeAppStates()
+    application.mdx.tracksAppStates()
 
     setupEurekaFormStyle()
 
-    Platforms.load([
+    SocialKit.Platforms.load(
         .qq(appID: "1106041023"),
         .weChat(appID: "wx38c88a78775189e6"),
-        .weibo(appID: "1736974603"),
-    ])
+        .weibo(appID: "1736974603")
+    )
 
     window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = UINavigationController(rootViewController: MainVC())
@@ -53,7 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   }
 
   func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey: Any] = [:]) -> Bool {
-    return Platforms.open(url)
+    return SocialKit.Platforms.open(url)
   }
 
 }

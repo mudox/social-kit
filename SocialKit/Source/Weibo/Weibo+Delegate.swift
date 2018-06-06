@@ -25,7 +25,7 @@ extension Weibo: WeiboSDKDelegate {
     }
   }
 
-  func _handle(_ response: WBAuthorizeResponse) {
+  private func _handle(_ response: WBAuthorizeResponse) {
     do {
       if let error = _error(for: response) {
         throw error
@@ -64,11 +64,11 @@ extension Weibo: WeiboSDKDelegate {
     }
   }
 
-  func _handle(_ response: WBSendMessageToWeiboResponse) {
+  private func _handle(_ response: WBSendMessageToWeiboResponse) {
     end(with: .sharing(error: _error(for: response)))
   }
 
-  func _error(for response: WBBaseResponse) -> SocialKitError? {
+  private func _error(for response: WBBaseResponse) -> SocialKitError? {
     switch response.statusCode {
 
     case .success:
