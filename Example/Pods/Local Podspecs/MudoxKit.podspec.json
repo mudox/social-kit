@@ -30,6 +30,9 @@
         ],
         "RxCocoa": [
 
+        ],
+        "RxSwiftExt": [
+
         ]
       }
     },
@@ -42,7 +45,7 @@
         ]
       },
       "resource_bundles": {
-        "mbp": "MudoxKit/MBP/MBP.xcassets"
+        "mbp": "MudoxKit/MBProgressHUD/mbp.xcassets"
       }
     },
     {
@@ -68,10 +71,10 @@
       "source_files": "MudoxKit/ObjectiveC/**/*"
     },
     {
-      "name": "SwiftyJSON",
-      "source_files": "MudoxKit/SwiftyJSON/**/*",
+      "name": "Eureka",
+      "source_files": "MudoxKit/Eureka/**/*",
       "dependencies": {
-        "SwiftyJSON": [
+        "Eureka": [
 
         ]
       }
@@ -91,10 +94,10 @@
         "MudoxKit/NVActivityIndicatorView": [
 
         ],
-        "MudoxKit/SwiftyJSON": [
+        "MudoxKit/ObjectiveC": [
 
         ],
-        "MudoxKit/ObjectiveC": [
+        "MudoxKit/Eureka": [
 
         ]
       }

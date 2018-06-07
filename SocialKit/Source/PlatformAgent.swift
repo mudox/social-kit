@@ -1,7 +1,7 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
+fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
 
 /// Base class for concrete social platform agent classes
 public class BasePlatformAgent: NSObject {
@@ -45,7 +45,7 @@ public class BasePlatformAgent: NSObject {
     case let .sharing(error: error):
       _sharingCompletion(error)
     case let .login(result, error):
-      jack.assert(
+      Jack.assert(
         (result == nil && error != nil) || (result != nil && error == nil),
         "result and error should not be nil or non-nil at the same time"
       )
@@ -100,42 +100,42 @@ public class BasePlatformAgent: NSObject {
 
   private var _sharingCompletion: SharingCompletion {
     guard let task = _task else {
-      jack.failure("Current task is nil")
+      Jack.failure("Current task is nil")
       return _defaultSharingCompletion
     }
 
     if case let .sharing(completion: block) = task {
       return block ?? _defaultSharingCompletion
     } else {
-      jack.failure("Expecting `_task` to be sharing task, got (\(_task!.type))")
+      Jack.failure("Expecting `_task` to be sharing task, got (\(_task!.type))")
       return _defaultSharingCompletion
     }
   }
 
   private var _loginCompletion: LoginCompletion {
     guard let task = _task else {
-      jack.failure("Value of `_task` should not be nil")
+      Jack.failure("Value of `_task` should not be nil")
       return _defaultLoginCompletion
     }
 
     if case let .login(completion: block) = task {
       return block ?? _defaultLoginCompletion
     } else {
-      jack.failure("Expecting `_task` to be login task, got (\(_task!.type))")
+      Jack.failure("Expecting `_task` to be login task, got (\(_task!.type))")
       return _defaultLoginCompletion
     }
   }
   
   private var _paymentCompletion: PaymentCompletion {
     guard let task = _task else {
-      jack.failure("Current task is nil")
+      Jack.failure("Current task is nil")
       return _defaultPaymentCompletion
     }
     
     if case let .payment(completion: block) = task {
       return block ?? _defaultPaymentCompletion
     } else {
-      jack.failure("Expecting `_task` to be payment task, got (\(_task!.type))")
+      Jack.failure("Expecting `_task` to be payment task, got (\(_task!.type))")
       return _defaultSharingCompletion
     }
   }

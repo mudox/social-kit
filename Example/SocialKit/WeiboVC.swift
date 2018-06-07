@@ -14,7 +14,7 @@ import SocialKit
 import iOSKit
 
 import JacKit
-fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
+fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
 
 class WeiboVC: FormViewController {
 

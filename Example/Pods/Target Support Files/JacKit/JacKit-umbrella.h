@@ -10,9 +10,10 @@
 #endif
 #endif
 
-#import "JacKit.h"
+#import "CLManager.h"
 #import "JKHTTPLogger.h"
 #import "JKTTYLoggerFormatter.h"
+#import "JacKit.h"
 
 FOUNDATION_EXPORT double JacKitVersionNumber;
 FOUNDATION_EXPORT const unsigned char JacKitVersionString[];

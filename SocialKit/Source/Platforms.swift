@@ -1,7 +1,8 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
+fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
+
 
 public final class Platforms {
 

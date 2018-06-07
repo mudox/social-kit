@@ -1,12 +1,12 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
+fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
 
 extension WeChat: WXApiDelegate {
   public func onResp(_ baseResponse: BaseResp!) {
     guard let baseResponse = baseResponse else {
-      jack.failure("got a nil `BaseResp` argument")
+      Jack.failure("got a nil `BaseResp` argument")
       return
     }
     
@@ -53,6 +53,6 @@ extension WeChat: WXApiDelegate {
   }
 
   public func onReq(_ baseRequest: BaseReq!) {
-    jack.failure("This callback is currently unhandled, argument `baseRequest`: \(baseRequest)")
+    Jack.failure("This callback is currently unhandled, argument `baseRequest`: \(baseRequest)")
   }
 }

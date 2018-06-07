@@ -1,7 +1,7 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.with(levelOfThisFile: .verbose)
+fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
 
 public class Weibo: BasePlatformAgent {
 
@@ -11,7 +11,7 @@ public class Weibo: BasePlatformAgent {
 
   override private init() {
     super.init()
-    jack.info(platformInfo, from: .custom("Weibo Platform Loaded"))
+    Jack(scope: "Weibo Platform").info(platformInfo)
   }
 
   public static func initPlatform(appID: String) {

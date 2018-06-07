@@ -1,17 +1,17 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.with(fileLocalLevel: .verbose)
+fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
 
 extension Weibo: WeiboSDKDelegate {
 
   public func didReceiveWeiboRequest(_ request: WBBaseRequest!) {
-    jack.failure("This callback is currently unhandled, argument `request`: \(request)")
+    Jack.failure("This callback is currently unhandled, argument `request`: \(request)")
   }
 
   public func didReceiveWeiboResponse(_ baseResponse: WBBaseResponse!) {
     guard let baseResponse = baseResponse else {
-      jack.failure("Got a nil `WBBaseResponse` argument")
+      Jack.failure("Got a nil `WBBaseResponse` argument")
       return
     }
 
@@ -21,7 +21,7 @@ extension Weibo: WeiboSDKDelegate {
     case let response as WBSendMessageToWeiboResponse:
       _handle(response)
     default:
-      jack.failure("Unhandled response kind \(type(of: baseResponse))")
+      Jack.failure("Unhandled response kind \(type(of: baseResponse))")
     }
   }
 
@@ -41,7 +41,7 @@ extension Weibo: WeiboSDKDelegate {
 
         _getUserInfo(accessToken: token!, userID: id!) { [weak self] json, error in
           guard let ss = self else {
-            jack.failure("`self` should last forever")
+            Jack.failure("`self` should last forever")
             return
           }
           
