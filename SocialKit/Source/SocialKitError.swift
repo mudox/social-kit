@@ -1,9 +1,3 @@
-//
-//  SocialError.swift
-//  SocialKit
-//
-//  Created by Mudox on 2018/4/7.
-//
 
 import Foundation
 

@@ -1,11 +1,3 @@
-//
-//  ViewController.swift
-//  SocialKit
-//
-//  Created by mudox on 11/13/2017.
-//  Copyright (c) 2017 mudox. All rights reserved.
-//
-
 import UIKit
 import Eureka
 import Kingfisher
