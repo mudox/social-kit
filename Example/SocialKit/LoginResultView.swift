@@ -1,6 +1,6 @@
 import UIKit
 import SocialKit
-import iOSKit
+import MudoxKit
 
 class LoginResultView: UIView {
 
@@ -11,32 +11,34 @@ class LoginResultView: UIView {
 
     contentView.isHidden = true
   }
-  
+
   func set(with userInfo: WeiboLoginResult) {
     tipLabel.isHidden = true
     contentView.isHidden = false
-    
+
     accessTokenLabel.text = userInfo.accessToken
     openIDLabel.text = userInfo.openID
-    
-    let dateText = with(DateFormatter()) { fmt -> String in
+
+    let dateText: String = {
+      let fmt = DateFormatter()
       fmt.timeZone = TimeZone.current
       fmt.dateStyle = .short
       fmt.timeStyle = .short
       return fmt.string(from: userInfo.expirationDate)
-    }
-    
-    let intervalText = with(DateComponentsFormatter()) { fmt -> String in
+    }()
+
+    let intervalText: String = {
+      let fmt = DateComponentsFormatter()
       fmt.unitsStyle = .abbreviated
-      
+
       fmt.includesTimeRemainingPhrase = true
       fmt.allowedUnits = [.day]
-      return  fmt.string(from: userInfo.expirationDate.timeIntervalSince(Date())) ?? ""
-    }
-    
+      return fmt.string(from: userInfo.expirationDate.timeIntervalSinceNow) ?? ""
+    }()
+
     expirationDateLabel.text = "\(dateText) (剩余 \(intervalText))"
-    
-    
+
+
     nicknameLabel.text = userInfo.nickname ?? "N/A"
     cityLabel.text = userInfo.location ?? "N/A"
     genderLabel.text = userInfo.gender == .male ? "Male" : "Female"
@@ -50,21 +52,23 @@ class LoginResultView: UIView {
     accessTokenLabel.text = userInfo.accessToken
     openIDLabel.text = userInfo.openID
 
-    let dateText = with(DateFormatter()) { fmt -> String in
+    let dateText: String = {
+      let fmt = DateFormatter()
       fmt.timeZone = TimeZone.current
       fmt.dateStyle = .short
       fmt.timeStyle = .short
       return fmt.string(from: userInfo.expirationDate)
-    }
+    }()
 
-    let intervalText = with(DateComponentsFormatter()) { fmt -> String in
+    let intervalText: String = {
+      let fmt = DateComponentsFormatter()
       fmt.unitsStyle = .abbreviated
       fmt.allowedUnits = [.day]
-      return  fmt.string(from: userInfo.expirationDate.timeIntervalSince(Date())) ?? ""
-    }
-    
+      return fmt.string(from: userInfo.expirationDate.timeIntervalSinceNow) ?? ""
+    }()
+
     expirationDateLabel.text = "\(dateText) \(intervalText)"
-    
+
 
     nicknameLabel.text = userInfo.nickname ?? "N/A"
     cityLabel.text = userInfo.location ?? "N/A"

@@ -2,7 +2,7 @@ import Foundation
 
 import Eureka
 
-import iOSKit
+import MudoxKit
 import SocialKit
 
 private let fontSize: CGFloat = 17

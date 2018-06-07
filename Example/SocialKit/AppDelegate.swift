@@ -1,7 +1,7 @@
 import UIKit
 
 import SocialKit
-import iOSKit
+import MudoxKit
 import Eureka
 
 @UIApplicationMain

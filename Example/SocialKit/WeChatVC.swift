@@ -11,7 +11,7 @@ import Eureka
 import Kingfisher
 
 import SocialKit
-import iOSKit
+import MudoxKit
 
 import JacKit
 fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
