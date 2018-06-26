@@ -1,7 +1,7 @@
 
 import Foundation
 
-public enum SocialKitError: Error, CustomStringConvertible {
+public enum SocialKitError: Swift.Error, CustomStringConvertible {
 
   /// Authorization failed.
   case authorization

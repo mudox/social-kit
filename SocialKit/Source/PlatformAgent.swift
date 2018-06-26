@@ -1,22 +1,23 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
+fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
 
 /// Base class for concrete social platform agent classes
 public class BasePlatformAgent: NSObject {
 
   // MARK: - Manage Task
 
+  /// Unlike normal network requests, each platform can start a one task at a time.
   enum Task {
     case sharing(completion: SharingCompletion?)
-    case login(completion: LoginCompletion?)
+    case login(completion: SignInCompletion?)
     case payment(completion: PaymentCompletion?)
     
     var type: String {
       switch self {
       case .sharing: return "sharing"
-      case .login: return "login"
+      case .login: return "signIn"
       case .payment: return "payment"
       }
     }
@@ -26,7 +27,7 @@ public class BasePlatformAgent: NSObject {
 
   enum TaskResult {
     case sharing(error: SocialKitError?)
-    case login(result: BaseLoginResult?, error: SocialKitError?)
+    case signIn(result: BaseSignInResult?, error: SocialKitError?)
     case payment(error: SocialKitError?)
   }
 
@@ -44,7 +45,7 @@ public class BasePlatformAgent: NSObject {
     switch result {
     case let .sharing(error: error):
       _sharingCompletion(error)
-    case let .login(result, error):
+    case let .signIn(result, error):
       Jack.assert(
         (result == nil && error != nil) || (result != nil && error == nil),
         "result and error should not be nil or non-nil at the same time"
@@ -58,7 +59,7 @@ public class BasePlatformAgent: NSObject {
   // MARK: - Manage Completion Blocks
 
   public typealias SharingCompletion = (SocialKitError?) -> ()
-  public typealias LoginCompletion = (BaseLoginResult?, SocialKitError?) -> ()
+  public typealias SignInCompletion = (BaseSignInResult?, SocialKitError?) -> ()
   public typealias PaymentCompletion = (SocialKitError?) -> ()
 
   // default sharing completion block
@@ -71,7 +72,7 @@ public class BasePlatformAgent: NSObject {
   }
 
   // default login completion block
-  private let _defaultLoginCompletion: LoginCompletion = { result, error in
+  private let _defaultSignInCompletion: SignInCompletion = { result, error in
     // check nullability combination
     if result == nil && error == nil {
       jack.error("reuslt and error should not be nil at the same time")
@@ -82,9 +83,9 @@ public class BasePlatformAgent: NSObject {
     }
 
     if let error = error {
-      jack.error("Unhandled social login task error: \(error)")
+      jack.error("Unhandled social signIn task error: \(error)")
     } else {
-      jack.debug("Unhandled social login task result: \(result!)")
+      jack.debug("Unhandled social signIn task result: \(result!)")
     }
   }
 
@@ -112,17 +113,17 @@ public class BasePlatformAgent: NSObject {
     }
   }
 
-  private var _loginCompletion: LoginCompletion {
+  private var _loginCompletion: SignInCompletion {
     guard let task = _task else {
       Jack.failure("Value of `_task` should not be nil")
-      return _defaultLoginCompletion
+      return _defaultSignInCompletion
     }
 
     if case let .login(completion: block) = task {
-      return block ?? _defaultLoginCompletion
+      return block ?? _defaultSignInCompletion
     } else {
-      Jack.failure("Expecting `_task` to be login task, got (\(_task!.type))")
-      return _defaultLoginCompletion
+      Jack.failure("Expecting `_task` to be signIn task, got (\(_task!.type))")
+      return _defaultSignInCompletion
     }
   }
   

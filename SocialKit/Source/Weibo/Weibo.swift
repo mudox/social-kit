@@ -1,7 +1,7 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
+fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
 
 public class Weibo: BasePlatformAgent {
 

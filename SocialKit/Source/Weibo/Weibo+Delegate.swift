@@ -1,7 +1,7 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
+fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
 
 extension Weibo: WeiboSDKDelegate {
 
@@ -46,21 +46,26 @@ extension Weibo: WeiboSDKDelegate {
           }
           
           if let error = error {
-            ss.end(with: .login(result: nil, error: error))
+            ss.end(with: .signIn(result: nil, error: error))
             return
           }
           
           guard let json = json else {
-            ss.end(with: .login(result: nil, error: .api(reason: "the `json` argument should be non-nil")))
+            ss.end(with: .signIn(result: nil, error: .api(reason: "the `json` argument should be non-nil")))
             return
           }
           
-          let result = WeiboLoginResult(accessToken: token!, openID: id!, expirationDate: date!, userInfo: json)
-          ss.end(with: .login(result: result, error: nil))
+          let result = Weibo.SignInResult(
+            id: id!,
+            accessToken: token!,
+            expirationDate: date!,
+            userInfo: json
+          )
+          ss.end(with: .signIn(result: result, error: nil))
         }
       }
     } catch {
-      end(with: .login(result: nil, error: (error as! SocialKitError)))
+      end(with: .signIn(result: nil, error: (error as! SocialKitError)))
     }
   }
 

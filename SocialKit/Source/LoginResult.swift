@@ -1,20 +1,20 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
+fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
 
-public class BaseLoginResult {
+public class BaseSignInResult {
 
+  public let id: String
   public let accessToken: String
-  public let openID: String
   public let expirationDate: Date
 
-  /// User information in JSON format that is associated with the openID.
+  /// User information in JSON format.
   public let userInfo: [String: Any]
 
-  init(accessToken: String, openID: String, expirationDate: Date, userInfo: [String: Any]) {
+  init(id: String, accessToken: String, expirationDate: Date, userInfo: [String: Any]) {
     self.accessToken = accessToken
-    self.openID = openID
+    self.id = id
     self.expirationDate = expirationDate
 
     self.userInfo = userInfo
@@ -26,7 +26,7 @@ public enum Gender {
   case male, female
 }
 
-public protocol LoginResultType {
+public protocol SignInResultType {
 
   var nickname: String? { get }
 

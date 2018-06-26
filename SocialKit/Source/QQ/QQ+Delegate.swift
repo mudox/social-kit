@@ -1,7 +1,7 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
+fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
 
 // MARK: - TencentSessionDelegate
 
@@ -9,7 +9,7 @@ extension QQ: TencentSessionDelegate {
 
   public func tencentDidLogin() {
     if let error = validate(accessToken: oauth.accessToken, openID: oauth.openId, expirationDate: oauth.expirationDate) {
-      end(with: .login(result: nil, error: error))
+      end(with: .signIn(result: nil, error: error))
       return
     }
 
@@ -27,7 +27,7 @@ extension QQ: TencentSessionDelegate {
         TencenOAuth.getLastErrorMsg: \(reason ?? "nil")
         """)
     }
-    end(with: .login(result: nil, error: error))
+    end(with: .signIn(result: nil, error: error))
   }
 
   public func tencentDidNotNetWork() {
@@ -36,33 +36,33 @@ extension QQ: TencentSessionDelegate {
       network error.
       TencenOAuth.getLastErrorMsg: \(reason ?? "nil")
       """)
-    end(with: .login(result: nil, error: error))
+    end(with: .signIn(result: nil, error: error))
   }
 
   public func getUserInfoResponse(_ response: APIResponse!) {
 
     guard response.retCode == URLREQUEST_SUCCEED.rawValue else {
-      end(with: .login(result: nil, error: .api(reason: "`response.retCode` != `URLREQUEST_SUCCEED.rawValue`")))
+      end(with: .signIn(result: nil, error: .api(reason: "`response.retCode` != `URLREQUEST_SUCCEED.rawValue`")))
       return
     }
 
     guard let json = response.jsonResponse as? [String: Any] else {
-      end(with: .login(result: nil, error: .api(reason: "fail to cast response.jsonResponse to `[String: Any]`")))
+      end(with: .signIn(result: nil, error: .api(reason: "fail to cast response.jsonResponse to `[String: Any]`")))
       return
     }
 
     if let error = validate(accessToken: oauth.accessToken, openID: oauth.openId, expirationDate: oauth.expirationDate) {
-      end(with: .login(result: nil, error: error))
+      end(with: .signIn(result: nil, error: error))
       return
     }
 
-    let result = QQLoginResult(
+    let result = QQ.SignInResult(
+      id: oauth.openId,
       accessToken: oauth.accessToken,
-      openID: oauth.openId,
       expirationDate: oauth.expirationDate,
       userInfo: json
     )
-    end(with: .login(result: result, error: nil))
+    end(with: .signIn(result: result, error: nil))
   }
 
 }

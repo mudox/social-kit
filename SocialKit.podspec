@@ -42,4 +42,6 @@ Pod::Spec.new do |s|
 
   s.dependency 'JacKit'
   s.dependency 'RxSwift'
+  s.dependency 'RxCocoa'
+  s.dependency 'Result'
 end

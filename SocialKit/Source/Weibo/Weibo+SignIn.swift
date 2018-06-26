@@ -1,58 +1,61 @@
 import Foundation
 
+import Result
+
 import JacKit
-fileprivate let jack = Jack.usingLocalFileScope().setLevel(.verbose)
+fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
 
-public class WeiboLoginResult: BaseLoginResult, LoginResultType {
-
-  public var nickname: String? {
-    return userInfo["screen_name"] as? String
-  }
-
-  public var gender: Gender? {
-    if let text = userInfo["gender"] as? String {
-      switch text {
-      case "m": return .male
-      case "f": return .female
-      default: return nil
-      }
-    } else {
-      return nil
-    }
-  }
-
-  public var avatarURL: URL? {
-    for key in ["avatar_large", "profile_image_url"] {
-      if let urlString = userInfo[key] as? String, let url = URL(string: urlString) {
-        return url
-      }
-    }
-    return nil
-  }
-
-  public var location: String? {
-    return userInfo["location"] as? String
-  }
-
-}
 
 extension Weibo {
+  
+  public class SignInResult: BaseSignInResult, SignInResultType {
+
+    public var nickname: String? {
+      return userInfo["screen_name"] as? String
+    }
+
+    public var gender: Gender? {
+      if let text = userInfo["gender"] as? String {
+        switch text {
+        case "m": return .male
+        case "f": return .female
+        default: return nil
+        }
+      } else {
+        return nil
+      }
+    }
+
+    public var avatarURL: URL? {
+      for key in ["avatar_large", "profile_image_url"] {
+        if let urlString = userInfo[key] as? String, let url = URL(string: urlString) {
+          return url
+        }
+      }
+      return nil
+    }
+
+    public var location: String? {
+      return userInfo["location"] as? String
+    }
+
+  }
 
   // used in login and constructing sharing request
   var authorizationRequest: WBAuthorizeRequest {
     let request = WBAuthorizeRequest()
     request.redirectURI = "https://api.weibo.com/oauth2/default.html"
     request.scope = "all"
-    request.shouldShowWebViewForAuthIfCannotSSO = false // disable H5 login
+    request.shouldShowWebViewForAuthIfCannotSSO = true // disable H5 signIn
     request.shouldOpenWeiboAppInstallPageIfNotInstalled = true
     return request
   }
 
-  public static func login(completion: @escaping LoginCompletion) {
-    Weibo.shared._login(completion: completion)
+  public static func signIn(completion: @escaping SignInCompletion) {
+    Weibo.shared._signIn(completion: completion)
   }
 
-  private func _login(completion: @escaping LoginCompletion) {
+  private func _signIn(completion: @escaping SignInCompletion) {
     begin(.login(completion: completion))
     WeiboSDK.send(authorizationRequest)
   }
@@ -61,7 +64,7 @@ extension Weibo {
 
     let baseURLString = "https://api.weibo.com/2/users/show.json"
     guard var urlcmp = URLComponents(string: baseURLString) else {
-      end(with: .login(result: nil, error: .api(reason: "Creating URLComponents from url string (\(baseURLString)) failed")))
+      end(with: .signIn(result: nil, error: .api(reason: "Creating URLComponents from url string (\(baseURLString)) failed")))
       return
     }
 
@@ -70,7 +73,7 @@ extension Weibo {
       URLQueryItem(name: "uid", value: userID),
     ]
     guard let url = urlcmp.url else {
-      end(with: .login(result: nil, error: .api(reason: "Appending query itesms to base URL string failed")))
+      end(with: .signIn(result: nil, error: .api(reason: "Appending query itesms to base URL string failed")))
       return
     }
 
