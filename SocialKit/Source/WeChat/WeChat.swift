@@ -1,7 +1,7 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
+fileprivate let jack = Jack()
 
 public class WeChat: BasePlatformAgent {
 
@@ -13,7 +13,7 @@ public class WeChat: BasePlatformAgent {
 
   override private init() {
     super.init()
-    Jack(scope: "WeChat Platform").info(platformInfo)
+    Jack("WeChat Platform").info(platformInfo)
   }
 
   public static func initPlatform(appID: String) {

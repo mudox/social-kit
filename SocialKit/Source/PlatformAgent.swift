@@ -1,7 +1,7 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
+fileprivate let jack = Jack()
 
 /// Base class for concrete social platform agent classes
 public class BasePlatformAgent: NSObject {

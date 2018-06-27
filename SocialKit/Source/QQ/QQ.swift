@@ -1,7 +1,7 @@
 import Foundation
 
 import JacKit
-fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
+fileprivate let jack = Jack()
 
 public class QQ: BasePlatformAgent {
 
@@ -13,7 +13,7 @@ public class QQ: BasePlatformAgent {
 
   override private init() {
     super.init()
-    Jack(scope: "QQ Platform").info(platformInfo)
+    Jack("QQ Platform").info(platformInfo)
   }
 
   public static func initPlatform(appID: String) {

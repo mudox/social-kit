@@ -1,7 +1,7 @@
 import UIKit
 
 import JacKit
-fileprivate let jack = Jack.fileScopeInstance().setLevel(.verbose)
+fileprivate let jack = Jack()
 
 import RxSwift
 import RxCocoa
