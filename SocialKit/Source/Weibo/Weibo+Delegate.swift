@@ -79,13 +79,13 @@ extension Weibo: WeiboSDKDelegate {
     case .success:
       return nil
     case .userCancel:
-      return .canceled(reason: nil)
+      return .cancelled(reason: nil)
     case .sentFail:
       return .send(reason: nil)
     case .authDeny:
       return .authorization
     case .userCancelInstall:
-      return .canceled(reason: "user canceled Weibo client app installation")
+      return .cancelled(reason: "user canceled Weibo client app installation")
     case .payFail:
       return .api(reason: "payment failed")
     case .shareInSDKFailed:

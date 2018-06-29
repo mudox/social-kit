@@ -20,7 +20,7 @@ extension QQ: TencentSessionDelegate {
   public func tencentDidNotLogin(_ cancelled: Bool) {
     var error: SocialKit.Error
     if cancelled {
-      error = SocialKit.Error.canceled(reason: "canceled by user")
+      error = SocialKit.Error.cancelled(reason: "canceled by user")
     } else {
       let reason = TencentOAuth.getLastErrorMsg()
       error = SocialKit.Error.other(reason: """

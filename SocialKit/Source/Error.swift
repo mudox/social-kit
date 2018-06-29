@@ -45,7 +45,7 @@ public enum Error: Swift.Error, CustomStringConvertible {
   ///
   /// Reaction:
   ///   No need to handle.
-  case canceled(reason: String?)
+  case cancelled(reason: String?)
 
   /// For example:
   /// - User sneak back, the task may completed or not
@@ -66,7 +66,7 @@ public enum Error: Swift.Error, CustomStringConvertible {
       return "API error, \(reason ?? "reason unknown")"
     case .send(let reason):
       return "failed to send request, \(reason ?? "reason unknown")"
-    case .canceled(let reason):
+    case .cancelled(let reason):
       return "task canceled, \(reason ?? "reason unknown")"
     case .other(let reason):
       return "other error, \(reason ?? "reason unknown")"

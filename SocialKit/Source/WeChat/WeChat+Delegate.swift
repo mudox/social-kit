@@ -29,7 +29,7 @@ extension WeChat: WXApiDelegate {
         \(message)
         """)
     case WXErrCodeUserCancel.rawValue:
-      error = .canceled(reason: message)
+      error = .cancelled(reason: message)
     case WXErrCodeSentFail.rawValue:
       error = .send(reason: message)
     case WXErrCodeAuthDeny.rawValue:
