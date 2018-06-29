@@ -5,8 +5,8 @@ fileprivate let jack = Jack()
 
 extension QQ {
 
-  fileprivate func _handle(_ code: QQApiSendResultCode) -> SocialKitError? {
-    let error: SocialKitError?
+  fileprivate func _handle(_ code: QQApiSendResultCode) -> SocialKit.Error? {
+    let error: SocialKit.Error?
 
     switch code {
     case EQQAPISENDSUCESS:
@@ -66,7 +66,7 @@ extension QQ {
 
   func _checkImageSizeNotExceeds5M(_ data: Data, completion block: SharingCompletion?) -> Bool {
     if data.count > 5 * 1024 * 1024 {
-      let error = SocialKitError.api(reason: "Image data size (\(data.count)) exceeds 5M")
+      let error = SocialKit.Error.api(reason: "Image data size (\(data.count)) exceeds 5M")
       begin(.sharing(completion: block))
       end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
       return false
@@ -77,7 +77,7 @@ extension QQ {
 
   func _checkPreviewImageSizeNotExceeds1M(_ data: Data?, completion block: SharingCompletion?) -> Bool {
     if let data = data, data.count > 1 * 1024 * 1024 {
-      let error = SocialKitError.api(reason: "Preview image size (\(data.count)) exceeds 1M")
+      let error = SocialKit.Error.api(reason: "Preview image size (\(data.count)) exceeds 1M")
       begin(.sharing(completion: block))
       end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
       return false
@@ -196,7 +196,7 @@ extension QQ {
     guard _checkPreviewImageSizeNotExceeds1M(previewImage, completion: block) else { return }
 
     if let data = previewImage, data.count > 1 * 1024 * 1024 {
-      let error = SocialKitError.api(reason: "Preview image size (\(data.count)) exceeds 1M")
+      let error = SocialKit.Error.api(reason: "Preview image size (\(data.count)) exceeds 1M")
       begin(.sharing(completion: block))
       end(with: .sharing(error: error)) // invoke default completion block is user pass a nil block.
       return

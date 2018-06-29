@@ -26,9 +26,9 @@ public class BasePlatformAgent: NSObject {
   private var _task: Task?
 
   enum TaskResult {
-    case sharing(error: SocialKitError?)
-    case signIn(result: BaseSignInResult?, error: SocialKitError?)
-    case payment(error: SocialKitError?)
+    case sharing(error: SocialKit.Error?)
+    case signIn(result: BaseSignInResult?, error: SocialKit.Error?)
+    case payment(error: SocialKit.Error?)
   }
 
   func begin(_ newTask: Task) {
@@ -58,9 +58,9 @@ public class BasePlatformAgent: NSObject {
 
   // MARK: - Manage Completion Blocks
 
-  public typealias SharingCompletion = (SocialKitError?) -> ()
-  public typealias SignInCompletion = (BaseSignInResult?, SocialKitError?) -> ()
-  public typealias PaymentCompletion = (SocialKitError?) -> ()
+  public typealias SharingCompletion = (SocialKit.Error?) -> ()
+  public typealias SignInCompletion = (BaseSignInResult?, SocialKit.Error?) -> ()
+  public typealias PaymentCompletion = (SocialKit.Error?) -> ()
 
   // default sharing completion block
   private let _defaultSharingCompletion: SharingCompletion = { error in
@@ -144,7 +144,7 @@ public class BasePlatformAgent: NSObject {
 
   // MARK: - Helpers
 
-  func validate(accessToken token: String?, openID id: String?, expirationDate date: Date?) -> SocialKitError? {
+  func validate(accessToken token: String?, openID id: String?, expirationDate date: Date?) -> SocialKit.Error? {
 
     guard let token = token, !token.isEmpty else {
       return .api(reason: "`oauth.accessToken` is nil or empty")

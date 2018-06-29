@@ -14,7 +14,7 @@ extension WeChat: WXApiDelegate {
     let message = "code - \(code), message: \(baseResponse.errStr ?? "nil")"
     jack.verbose(message)
 
-    let error: SocialKitError?
+    let error: SocialKit.Error?
     switch code
     {
     case WXSuccess.rawValue:

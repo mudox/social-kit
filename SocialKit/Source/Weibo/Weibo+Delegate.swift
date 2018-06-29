@@ -65,7 +65,7 @@ extension Weibo: WeiboSDKDelegate {
         }
       }
     } catch {
-      end(with: .signIn(result: nil, error: (error as! SocialKitError)))
+      end(with: .signIn(result: nil, error: (error as! SocialKit.Error)))
     }
   }
 
@@ -73,7 +73,7 @@ extension Weibo: WeiboSDKDelegate {
     end(with: .sharing(error: _error(for: response)))
   }
 
-  private func _error(for response: WBBaseResponse) -> SocialKitError? {
+  private func _error(for response: WBBaseResponse) -> SocialKit.Error? {
     switch response.statusCode {
 
     case .success:
@@ -97,16 +97,4 @@ extension Weibo: WeiboSDKDelegate {
     }
   }
 
-}
-
-extension Weibo: WBMediaTransferProtocol {
-  public func wbsdk_TransferDidReceive(_ object: Any!) {
-    print(object)
-  }
-  
-  public func wbsdk_TransferDidFailWith(_ errorCode: WBSDKMediaTransferErrorCode, andError error: Error!) {
-    print("\(errorCode) - \(error)")
-  }
-  
-  
 }

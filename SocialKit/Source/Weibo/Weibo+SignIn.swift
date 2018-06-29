@@ -60,7 +60,7 @@ extension Weibo {
     WeiboSDK.send(authorizationRequest)
   }
 
-  func _getUserInfo(accessToken: String, userID: String, completion block: @escaping ([String: Any]?, SocialKitError?) -> ()) {
+  func _getUserInfo(accessToken: String, userID: String, completion block: @escaping ([String: Any]?, SocialKit.Error?) -> ()) {
 
     let baseURLString = "https://api.weibo.com/2/users/show.json"
     guard var urlcmp = URLComponents(string: baseURLString) else {
@@ -81,24 +81,24 @@ extension Weibo {
     let session = URLSession(configuration: config)
     let task = session.dataTask(with: url) { data, response, error in
       guard error == nil else {
-        block(nil, SocialKitError.send(reason: "network error, \(error!)"))
+        block(nil, SocialKit.Error.send(reason: "network error, \(error!)"))
         return
       }
 
       guard let httpResponse = response as? HTTPURLResponse else {
-        block(nil, SocialKitError.send(reason: "URL loading error, casting to HTTPURLResponse failed"))
+        block(nil, SocialKit.Error.send(reason: "URL loading error, casting to HTTPURLResponse failed"))
         return
       }
 
       guard 200..<300 ~= httpResponse.statusCode else {
         let code = httpResponse.statusCode
         let text = HTTPURLResponse.localizedString(forStatusCode: code)
-        block(nil, SocialKitError.send(reason: "URL loading error, unexpected status code \(code) - \(text)"))
+        block(nil, SocialKit.Error.send(reason: "URL loading error, unexpected status code \(code) - \(text)"))
         return
       }
 
       guard let data = data else {
-        block(nil, SocialKitError.send(reason: "URL loading error, no data received"))
+        block(nil, SocialKit.Error.send(reason: "URL loading error, no data received"))
         return
       }
 
@@ -106,10 +106,10 @@ extension Weibo {
         if let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
           block(json, nil)
         } else {
-          block(nil, SocialKitError.api(reason: "casting deserialized object to `[String: Any]` failed."))
+          block(nil, SocialKit.Error.api(reason: "casting deserialized object to `[String: Any]` failed."))
         }
       } catch {
-        let e = SocialKitError.api(reason: "deserializing response JSON data failed, \(error)")
+        let e = SocialKit.Error.api(reason: "deserializing response JSON data failed, \(error)")
         block(nil, e)
       }
     }

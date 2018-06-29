@@ -18,10 +18,10 @@ extension Reactive where Base: Weibo {
             jack.info("\(r)")
             single(.success(r))
           } else {
-            single(.error(SocialKitError.sdk(reason: "casting `result` to `Weibo.SignInResult` failed")))
+            single(.error(SocialKit.Error.sdk(reason: "casting `result` to `Weibo.SignInResult` failed")))
           }
         } else {
-          single(.error(SocialKitError.sdk(reason: "`result` & `error` should not both be nil")))
+          single(.error(SocialKit.Error.sdk(reason: "`result` & `error` should not both be nil")))
         }
       })
       return Disposables.create()
