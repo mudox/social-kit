@@ -11,7 +11,7 @@ public class Weibo: BasePlatformAgent {
 
   override private init() {
     super.init()
-    Jack("Weibo Platform").info(platformInfo)
+    Jack("Weibo").info(platformInfo, options: .messageOnly)
   }
 
   public static func initPlatform(appID: String) {
@@ -49,9 +49,10 @@ extension Weibo: PlatformAgentType {
     }
 
     return """
+      🍋 Weibo
         - SDK        :   \(version)
         - Weibo      :   \(app)
-      """
+      """ + "\n"
   }
 
   public static func open(_ url: URL) -> Bool {

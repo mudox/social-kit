@@ -13,7 +13,7 @@ public class WeChat: BasePlatformAgent {
 
   override private init() {
     super.init()
-    Jack("WeChat Platform").info(platformInfo)
+    Jack("WeChat").info(platformInfo, options: .messageOnly)
   }
 
   public static func initPlatform(appID: String) {
@@ -57,9 +57,10 @@ extension WeChat: PlatformAgentType {
     }
 
     return """
+      🍋 WeChat
         - SDK        :   \(version)
         - WeChat     :   \(app)
-      """
+      """ + "\n"
   }
 
   public static func open(_ url: URL) -> Bool {

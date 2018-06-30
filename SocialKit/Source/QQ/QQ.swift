@@ -13,7 +13,7 @@ public class QQ: BasePlatformAgent {
 
   override private init() {
     super.init()
-    Jack("QQ Platform").info(platformInfo)
+    Jack("QQ").info(platformInfo, options: .messageOnly)
   }
 
   public static func initPlatform(appID: String) {
@@ -71,10 +71,11 @@ extension QQ: PlatformAgentType {
     }
 
     return """
+      🍋 QQ
         - SDK        :   \(version)
         -  QQ        :   \(qq)
         - TIM        :   \(tim)
-      """
+      """ + "\n"
   }
 
   public static func open(_ url: URL) -> Bool {
