@@ -11,7 +11,7 @@ public class Weibo: BasePlatformAgent {
 
   override private init() {
     super.init()
-    Jack("Weibo").info(platformInfo, options: .messageOnly)
+    Jack("Weibo").info(platformInfo, options: .bare)
   }
 
   public static func initPlatform(appID: String) {

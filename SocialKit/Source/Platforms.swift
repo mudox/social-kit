@@ -3,11 +3,10 @@ import Foundation
 import JacKit
 fileprivate let jack = Jack()
 
-
 public final class Platforms {
 
   public enum LoadingInfo: Hashable, CustomStringConvertible {
-    
+
     case weibo(appID: String)
     case qq(appID: String)
     case weChat(appID: String)
@@ -43,19 +42,20 @@ public final class Platforms {
 
     _platforms.forEach { info in
       switch info {
-      case .qq(let appID):
+      case let .qq(appID):
         QQ.initPlatform(appID: appID)
-      case .weChat(let appID):
+      case let .weChat(appID):
         WeChat.initPlatform(appID: appID)
-      case .weibo(let appID):
+      case let .weibo(appID):
         Weibo.initPlatform(appID: appID)
-      case .aliPay(let appID):
+      case let .aliPay(appID):
+        _ = appID
         fatalError("Unimplemented")
       }
     }
 
   }
-  
+
   public static func load(_ platforms: LoadingInfo...) {
     load(Set(platforms))
   }
@@ -73,4 +73,3 @@ public final class Platforms {
   }
 
 }
-

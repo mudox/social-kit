@@ -13,7 +13,7 @@ public class QQ: BasePlatformAgent {
 
   override private init() {
     super.init()
-    Jack("QQ").info(platformInfo, options: .messageOnly)
+    Jack("QQ").info(platformInfo, options: .bare)
   }
 
   public static func initPlatform(appID: String) {
