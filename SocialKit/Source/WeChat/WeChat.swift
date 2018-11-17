@@ -13,7 +13,7 @@ public class WeChat: BasePlatformAgent {
 
   override private init() {
     super.init()
-    Jack("WeChat").info(platformInfo, options: .bare)
+    Jack("WeChat").info(platformInfo, format: .bare)
   }
 
   public static func initPlatform(appID: String) {

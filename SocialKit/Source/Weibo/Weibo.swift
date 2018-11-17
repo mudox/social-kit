@@ -9,9 +9,9 @@ public class Weibo: BasePlatformAgent {
 
   // MARK: Platform init
 
-  override private init() {
+  private override init() {
     super.init()
-    Jack("Weibo").info(platformInfo, options: .bare)
+    Jack("Weibo").info(platformInfo, format: .bare)
   }
 
   public static func initPlatform(appID: String) {
@@ -49,10 +49,10 @@ extension Weibo: PlatformAgentType {
     }
 
     return """
-      🍋 Weibo
-        - SDK        :   \(version)
-        - Weibo      :   \(app)
-      """ + "\n"
+    🍋 Weibo
+      - SDK        :   \(version)
+      - Weibo      :   \(app)
+    """ + "\n"
   }
 
   public static func open(_ url: URL) -> Bool {
@@ -70,6 +70,5 @@ extension Weibo: PlatformAgentType {
   public var canShare: Bool {
     return WeiboSDK.isWeiboAppInstalled() && WeiboSDK.isCanShareInWeiboAPP()
   }
-
 
 }
