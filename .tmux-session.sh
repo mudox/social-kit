@@ -41,7 +41,13 @@ tmux new-session       \
   -d
 sleep 0.2
 tmux send-keys -t "${window}" "
-vv -O ${session_name}.podspec Example/Podfile
+vv -O ${session_name}.podspec Demo/Podfile
+:tabnew fastlane/Fastfile
+:tabnew .travis.yml
+:tabnew .gitignore
+:tabnew .tmux-session.sh
+:tabnew README.md
+:tabnew CHANGELOG.md
 "
 
 #
@@ -60,7 +66,7 @@ tmux new-window              \
   -d
 sleep 0.2
 tmux send-keys -t "${window}" "
-jacsrv --port 7001 || say 'starting logging server for ios kit failed'
+jacsrv --port 7001
 "
 
 #
