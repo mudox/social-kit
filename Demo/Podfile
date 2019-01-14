@@ -1,0 +1,41 @@
+use_frameworks!
+platform :ios, '9.0'
+
+def my_pods
+  # Travis-CI set `CI` on macOS environment
+  if ENV['CI'] == 'true'
+    pod 'JacKit',  :git  => 'https://github.com/mudox/jac-kit.git'
+    pod 'JacKit',                     :git  => 'https://github.com/mudox/jac-kit.git'
+
+    pod 'MudoxKit',                   :git  => 'https://github.com/mudox/mudox-kit.git'
+    pod 'MudoxKit/MBProgressHUD',     :git  => 'https://github.com/mudox/mudox-kit.git'
+    pod 'MudoxKit/ActivityCenter',    :git  => 'https://github.com/mudox/mudox-kit.git'
+
+    pod 'SocialKit',                  :git  => 'https://github.com/mudox/social-kit.git'
+
+  else
+    basePath      = '/Users/mudox/Develop/Apple/Frameworks/'
+
+    pod 'JacKit',                     path: basePath + 'JacKit'
+
+    pod 'MudoxKit',                   path: basePath + 'MudoxKit'
+    pod 'MudoxKit/MBProgressHUD',     path: basePath + 'MudoxKit'
+    pod 'MudoxKit/ActivityCenter',    path: basePath + 'MudoxKit'
+
+    pod 'SocialKit',                  path: basePath + 'SocialKit'
+  end
+
+end
+
+target 'Demo' do
+
+  my_pods
+
+  pod 'Eureka'
+  pod 'Kingfisher'
+
+  target 'Test' do
+    inherit! :search_paths
+
+  end
+end
